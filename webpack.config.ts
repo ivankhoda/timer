@@ -1,4 +1,5 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import { Configuration } from "webpack";
 const config: Configuration = {
@@ -16,10 +17,21 @@ const config: Configuration = {
           },
         },
       },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          "style-loader",
+          // Translates CSS into CommonJS
+          "css-loader",
+          // Compiles Sass to CSS
+          "sass-loader",
+        ],
+      },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", ".css", ".scss"],
   },
   output: {
     path: path.resolve(__dirname, "build"),
@@ -35,9 +47,10 @@ const config: Configuration = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
-        files: "./src/**/*",
+        files: "./src/**/*.{ts,tsx,js,jsx}",
       },
     }),
+    new MiniCssExtractPlugin(),
   ],
 };
 
