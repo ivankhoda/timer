@@ -5,14 +5,14 @@ import { App } from "./App";
 const titleWords = { words: "Welcome to timer App" };
 
 describe("App", () => {
-  it("Render initial words", () => {
+  it("App renders title words", () => {
     const { getByTestId } = render(<App>{titleWords}</App>);
 
     expect(getByTestId("title").textContent).toMatch(titleWords.words);
   });
-  it.skip("Check for skip", () => {
+  it("App renders timer component", () => {
     const { getByTestId } = render(<App>{titleWords}</App>);
 
-    expect(getByTestId("title")).toBeNull();
+    expect(getByTestId("timer")).not.toBeNull();
   });
 });
