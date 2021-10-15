@@ -5,7 +5,7 @@ const initialState = {
   status: "paused",
   decrement_interval: 0,
 };
-const countdownTimer = (state = initialState, action: { type: any; start_time: any }) => {
+const countdownTimer = (state = initialState, action: { type: string; start_time: unknown }) => {
   switch (action.type) {
     case "START_TIMER":
       return Object.assign({}, state, {
@@ -16,7 +16,7 @@ const countdownTimer = (state = initialState, action: { type: any; start_time: a
     case "STOP_TIMER":
       return Object.assign({}, state, { status: "paused" });
     case "TICK":
-      return Object.assign({}, state, { seconds: (state.seconds - 0.01).toFixed(2) });
+      return Object.assign({}, state, { seconds: (state.seconds - 1).toFixed(2) });
     default:
       return state;
   }
