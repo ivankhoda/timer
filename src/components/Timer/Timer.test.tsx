@@ -52,10 +52,10 @@ describe("Timer", () => {
   it("Timer renders rounds values, working and rest time", () => {
     const { getAllByTestId } = render(<Timer />);
 
-    // expect(getAllByTestId("field-property")[1]).not.toBeNull();
-    // expect(getAllByTestId("field-property")[1]).toEqual(defaultValues.initialWorkingTime);
-    // expect(getAllByTestId("field-property")[2]).not.toBeNull();
-    // expect(getAllByTestId("field-property")[2]).toEqual(defaultValues.currentRound);
+    expect(getAllByTestId("field-property")[1]).not.toBeNull();
+    expect(getAllByTestId("field-property")[1]).toEqual(defaultValues.initialWorkingTime);
+    expect(getAllByTestId("field-property")[2]).not.toBeNull();
+    expect(getAllByTestId("field-property")[2]).toEqual(defaultValues.currentRound);
     // expect(totalRounds).not.toBeNull();
     // expect(totalRounds).toEqual(defaultValues.totalRounds);
   });

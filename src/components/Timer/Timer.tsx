@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import "./Timer.style.scss";
 //TODO:fix type of Timer props, or refactor component
@@ -24,22 +25,21 @@ export const Timer = () => {
   const [buttonOff, setButtonOff] = useState(false);
   //TODO Make button text depend on state
 
-  const startWorkingTime = (workingSeconds: number, restingSeconds: number) => {
+  const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
     let counter = workingSeconds - 1;
 
-    const interval1 = setInterval(() => {
+    const interval = setInterval(() => {
       setWorkingTime(counter);
       counter--;
       if (counter < 0) {
-        clearInterval(interval1);
+        clearInterval(interval);
         console.log("Working time is over");
-        startRestTime(restingSeconds);
+        startRestTime(restingSeconds, updateTime);
       }
     }, 1000);
-    console.log(interval1);
   };
 
-  const startRestTime = (seconds: number) => {
+  const startRestTime = (seconds: number, updateTime: () => void) => {
     let counter = seconds - 1;
 
     const interval = setInterval(() => {
@@ -48,20 +48,22 @@ export const Timer = () => {
       if (counter < 0) {
         clearInterval(interval);
         console.log("Rest time is over");
-        updateTimer();
+        updateTime();
       }
     }, 1000);
   };
 
   //TODO add cycles
-  const startWork = (work: number, rest: number) => {
-    console.log("Work started");
-    startWorkingTime(work, rest);
-  };
+  // const startWork = (workingSeconds: number, restingSeconds: number) => {
+  //   console.log("Work started");
+  //   startWorkingTime(workingSeconds, restingSeconds);
+  // };
   const updateTimer = () => {
     setWorkingTime(timeset.threeMinutes);
     setRestTime(timeset.oneMinute);
-    setCurrentRound(currentRound + 1);
+    if (currentRound !== timeset.totalRounds) {
+      setCurrentRound(currentRound + 1);
+    }
   };
   const resetTimer = () => {
     setWorkingTime(timeset.threeMinutes);
@@ -93,7 +95,11 @@ export const Timer = () => {
         </div>
       </section>
       <div data-testid="button-container" className="button-container">
-        <button data-testid="start-button" onClick={() => startWork(workingTime, restTime)} disabled={buttonOff}>
+        <button
+          data-testid="start-button"
+          onClick={() => startCycle(workingTime, restTime, updateTimer)}
+          disabled={buttonOff}
+        >
           БОКС!
         </button>
         <button data-testid="cancel-button" onClick={() => resetTimer()}>
