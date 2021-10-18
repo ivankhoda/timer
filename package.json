@@ -2,7 +2,7 @@
   "scripts": {
     "start": "webpack serve --open",
     "build": "webpack --mode production",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test:watch": "jest --watch"
   },
   "dependencies": {
@@ -17,8 +17,10 @@
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
     "@babel/runtime": "^7.15.4",
+    "@testing-library/dom": "^8.9.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.4.1",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
     "@types/jest": "^27.0.2",
     "@types/mini-css-extract-plugin": "^2.3.0",
@@ -41,6 +43,7 @@
     "jest": "^27.2.5",
     "jsdom": "^16.7.0",
     "mini-css-extract-plugin": "^2.4.2",
+    "react-redux": "^7.2.5",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",

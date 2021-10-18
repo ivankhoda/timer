@@ -3,13 +3,6 @@ import React from "react";
 import { Timer } from "./Timer";
 
 describe("Timer", () => {
-  const defaultValues = {
-    initialWorkingTime: "03:00",
-    currentRound: 1,
-    totalRounds: 3,
-    restTime: "01:00",
-  };
-
   it("Section with timer", () => {
     const { getByTestId } = render(<Timer />);
 
@@ -53,10 +46,8 @@ describe("Timer", () => {
     const { getAllByTestId } = render(<Timer />);
 
     expect(getAllByTestId("field-property")[1]).not.toBeNull();
-    expect(getAllByTestId("field-property")[1]).toEqual(defaultValues.initialWorkingTime);
+    expect(getAllByTestId("field-property")[1].innerHTML).toEqual("03:00");
     expect(getAllByTestId("field-property")[2]).not.toBeNull();
-    expect(getAllByTestId("field-property")[2]).toEqual(defaultValues.currentRound);
-    // expect(totalRounds).not.toBeNull();
-    // expect(totalRounds).toEqual(defaultValues.totalRounds);
+    expect(getAllByTestId("field-property")[2].innerHTML).toEqual("01:00");
   });
 });

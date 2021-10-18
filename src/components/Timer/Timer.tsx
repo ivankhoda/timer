@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
+import { store } from "../../store/store";
 import "./Timer.style.scss";
+import { timeset } from "./timeset";
 //TODO:fix type of Timer props, or refactor component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const timeset = {
-  threeMinutes: 5,
-  oneMinute: 3,
-  totalRounds: 3,
-  startRound: 1,
+
+const increment = () => {
+  return { type: "increment" };
 };
+
+const decrement = () => {
+  return { type: "decrement" };
+};
+
 export const Timer = () => {
   const secondsToMinutes = (seconds: number) => {
     const date = new Date(0);
@@ -17,11 +22,11 @@ export const Timer = () => {
     const time = date.toISOString().substr(14, 5);
     return time;
   };
-
+  const totalRounds = store.getState();
+  const [rounds, setRounds] = useState(totalRounds);
   const [workingTime, setWorkingTime] = useState(timeset.threeMinutes);
   const [restTime, setRestTime] = useState(timeset.oneMinute);
   const [currentRound, setCurrentRound] = useState(timeset.startRound);
-  const [totalRounds, setTotalRounds] = useState(timeset.totalRounds);
   const [buttonOff, setButtonOff] = useState(false);
   //TODO Make button text depend on state
 
@@ -53,11 +58,22 @@ export const Timer = () => {
     }, 1000);
   };
 
-  //TODO add cycles
-  // const startWork = (workingSeconds: number, restingSeconds: number) => {
-  //   console.log("Work started");
-  //   startWorkingTime(workingSeconds, restingSeconds);
-  // };
+  const onIncrementButtonClicked = () => {
+    store.dispatch(increment());
+    setRounds(store.getState());
+  };
+
+  const onDecrementButtonClicked = () => {
+    store.dispatch(decrement());
+    setRounds(store.getState());
+  };
+  store.subscribe(increment);
+  store.subscribe(decrement);
+
+  //TODO add cycles logic
+  //TODO add pause function
+  //TODO add restart current round progress
+
   const updateTimer = () => {
     setWorkingTime(timeset.threeMinutes);
     setRestTime(timeset.oneMinute);
@@ -70,13 +86,14 @@ export const Timer = () => {
     setRestTime(timeset.oneMinute);
     setCurrentRound(timeset.startRound);
   };
+
   return (
     <div data-testid="timer" className="timer">
       <section data-testid="section" className="section">
         <div data-testid="field" className="field">
           <p data-testid="field-name">Раунд</p>
           <p data-testid="field-property">
-            {currentRound}/{totalRounds}
+            {currentRound}/{rounds}
           </p>
         </div>
       </section>
@@ -107,6 +124,10 @@ export const Timer = () => {
         </button>
         <button data-testid="settings-button">Настройки</button>
       </div>
+
+      <input placeholder="Введите количество раундов"></input>
+      <button onClick={onIncrementButtonClicked}>+</button>
+      <button onClick={onDecrementButtonClicked}>-</button>
     </div>
   );
 };
