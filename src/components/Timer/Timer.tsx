@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
+import { DECREMENT_TOTAL_ROUNDS, INCREMENT_TOTAL_ROUNDS } from "../../actions/actions";
 import { store } from "../../store/store";
 import "./Timer.style.scss";
 import { timeset } from "./timeset";
@@ -8,11 +9,11 @@ import { timeset } from "./timeset";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const increment = () => {
-  return { type: "increment" };
+  return { type: INCREMENT_TOTAL_ROUNDS };
 };
 
 const decrement = () => {
-  return { type: "decrement" };
+  return { type: DECREMENT_TOTAL_ROUNDS };
 };
 
 export const Timer = () => {
