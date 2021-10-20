@@ -17,3 +17,12 @@
   align-items: center;
   width: 100%;
 }
+.increment-control {
+  display: flex;
+  flex-direction: column;
+}
+.increment-control_buttons .setRounds-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { createStore } from "redux";
-import { setRounds } from "../reducers";
+import { reducer } from "../reducers/reducer";
 
-const store = createStore(setRounds);
+const store = createStore(reducer);
 
 export { store };

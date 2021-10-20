@@ -23,7 +23,28 @@ export const Timer = () => {
     const time = date.toISOString().substr(14, 5);
     return time;
   };
-  const totalRounds = store.getState();
+
+  const setRoundsStore = store.getState().setRounds;
+  const totalRounds = setRoundsStore;
+  const onIncrementButtonClicked = () => {
+    store.getState().setRounds !== 99
+      ? (store.dispatch(increment()), setRounds(store.getState().setRounds))
+      : console.log("Reached limit");
+  };
+  const onDecrementButtonClicked = () => {
+    console.log(typeof store.getState().setRounds);
+    console.log(store.getState().setRounds);
+    store.getState().setRounds !== 1
+      ? //checkLimits(store.getState().setRounds, 1)
+        (store.dispatch(decrement()), setRounds(store.getState().setRounds))
+      : console.log("Reached limit");
+  };
+  const checkLimits = (value: number, limit: number) => {
+    value !== limit ? console.log("limit not reached yet") : console.log("limit reached");
+  };
+  store.subscribe(increment);
+  store.subscribe(decrement);
+
   const [rounds, setRounds] = useState(totalRounds);
   const [workingTime, setWorkingTime] = useState(timeset.threeMinutes);
   const [restTime, setRestTime] = useState(timeset.oneMinute);
@@ -58,18 +79,6 @@ export const Timer = () => {
       }
     }, 1000);
   };
-
-  const onIncrementButtonClicked = () => {
-    store.dispatch(increment());
-    setRounds(store.getState());
-  };
-
-  const onDecrementButtonClicked = () => {
-    store.dispatch(decrement());
-    setRounds(store.getState());
-  };
-  store.subscribe(increment);
-  store.subscribe(decrement);
 
   //TODO add cycles logic
   //TODO add pause function
@@ -125,10 +134,18 @@ export const Timer = () => {
         </button>
         <button data-testid="settings-button">Настройки</button>
       </div>
+      <form className="setRounds-form">
+        <input placeholder="Введите количество раундов"></input>
+        <button type="submit">Set rounds</button>
+      </form>
 
-      <input placeholder="Введите количество раундов"></input>
-      <button onClick={onIncrementButtonClicked}>+</button>
-      <button onClick={onDecrementButtonClicked}>-</button>
+      <div className="increment-control">
+        <label>Используйте кнопки, чтобы установить количество раундов</label>
+        <div className="increment-control_buttons">
+          <button onClick={onIncrementButtonClicked}>+</button>
+          <button onClick={onDecrementButtonClicked}>-</button>
+        </div>
+      </div>
     </div>
   );
 };
