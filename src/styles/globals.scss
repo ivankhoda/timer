@@ -1,0 +1,17 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+$body-color: #282d3c;
+$background-color: #edf1ff;
+$font: Helvetica, sans-serif;
+html,
+body {
+  color: $body-color;
+  background-color: $background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: $font;
+}
