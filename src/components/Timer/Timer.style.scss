@@ -26,3 +26,24 @@
   flex-direction: row;
   justify-content: space-between;
 }
+button {
+  color: aliceblue;
+  border-radius: var(--RADIUS-MEDUIM);
+}
+.start-button {
+  background-color: var(--PRIMARY-BUTTON);
+
+  padding: var(--SPACE-SMALL);
+  border: solid white;
+}
+.cancel-button {
+  background-color: var(--SECONDARY-BUTTON);
+  margin-top: var(--SPACE-SMALL);
+
+  border: none;
+}
+.settings-button {
+  background-color: var(--NEUTRAL-BUTTON);
+  //margin:
+  border: none;
+}

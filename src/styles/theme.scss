@@ -1,5 +1,16 @@
 :root {
   //colors
-  $background-color: #edf1ff;
+  --PRIMARY-BUTTON: #0072b5;
+  --SECONDARY-BUTTON: #d2386c;
+  --NEUTRAL-BUTTON: #798ea4;
+  //distances
+  --SPACE-SMALL: 12px;
+  --SPACE-MEDUIM: 18px;
+  --SPACE-LARGE: 24px;
+
+  //radius
+  --RADIUS-SMALL: 4px;
+  --RADIUS-MEDUIM: 8px;
+  --RADIUS-LARGE: 12px;
   //sizes
 }
