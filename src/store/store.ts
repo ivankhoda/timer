@@ -1,27 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { createStore } from "redux";
-const initialState = {
-  seconds: 0,
-  start_time: 0,
-  status: "paused",
-  decrement_interval: 0,
-};
-const countdownTimer = (state = initialState, action: { type: string; start_time: unknown }) => {
-  switch (action.type) {
-    case "START_TIMER":
-      return Object.assign({}, state, {
-        start_time: action.start_time,
-        seconds: action.start_time,
-        status: "counting down",
-      });
-    case "STOP_TIMER":
-      return Object.assign({}, state, { status: "paused" });
-    case "TICK":
-      return Object.assign({}, state, { seconds: (state.seconds - 1).toFixed(2) });
-    default:
-      return state;
-  }
-};
+import { reducer } from "../reducers/reducer";
 
-const store = createStore(countdownTimer);
+const store = createStore(reducer);
 
-export default store;
+export { store };
