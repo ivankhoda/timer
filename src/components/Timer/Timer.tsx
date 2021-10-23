@@ -1,18 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import {
+  DECREMENT_CURRENT_ROUND,
   DECREMENT_RESTING_TIME,
   DECREMENT_TOTAL_ROUNDS,
   DECREMENT_WORKING_TIME,
+  INCREMENT_CURRENT_ROUND,
   INCREMENT_RESTING_TIME,
   INCREMENT_TOTAL_ROUNDS,
   INCREMENT_WORKING_TIME,
+  RESET_TIMER,
   SET_ROUNDS,
 } from "../../actions/actions";
 import { store } from "../../store/store";
 import { secondsToMinutes } from "../../utils";
 import "./Timer.style.scss";
-import { timeset } from "./timeset";
 //TODO:fix type of Timer props, or refactor component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,12 +40,22 @@ const incrementRestingTime = (payload: number) => {
 const decrementRestingTime = (payload: number) => {
   return { type: DECREMENT_RESTING_TIME, payload: payload };
 };
+const incrementCurrentRound = () => {
+  return { type: INCREMENT_CURRENT_ROUND };
+};
+const decrementCurrentRound = () => {
+  return { type: DECREMENT_CURRENT_ROUND };
+};
+const resetTimer = () => {
+  return { type: RESET_TIMER };
+};
 
 export const Timer = () => {
   const setRoundsStore = store.getState().setRounds;
   const totalRounds = setRoundsStore;
   const workTime = store.getState().setWorkingTime;
   const restTime = store.getState().setRestingTime;
+  const currentRound = store.getState().setCurrentRound;
 
   const onIncrementButtonClicked = () => {
     store.getState().setRounds !== 99
@@ -74,7 +86,7 @@ export const Timer = () => {
   const [rounds, setRounds] = useState(totalRounds);
   const [workingTime, setWorkingTime] = useState(workTime);
   const [restingTime, setRestTime] = useState(restTime);
-  const [currentRound, setCurrentRound] = useState(timeset.startRound);
+  const [round, setCurrentRound] = useState(currentRound);
   const [buttonOff, setButtonOff] = useState(false);
   //TODO Make button text depend on state
 
@@ -83,10 +95,11 @@ export const Timer = () => {
 
     const interval = setInterval(() => {
       store.dispatch(decrementWorkingTime(counter));
+      setWorkingTime(store.getState().setWorkingTime);
       counter--;
+
       if (counter < 0) {
         clearInterval(interval);
-        console.log("Working time is over");
         startRestTime(restingSeconds, updateTime);
       }
     }, 1000);
@@ -97,32 +110,40 @@ export const Timer = () => {
 
     const interval = setInterval(() => {
       store.dispatch(decrementRestingTime(counter));
+      setRestTime(store.getState().setRestingTime);
       counter--;
+
       if (counter < 0) {
         clearInterval(interval);
-        console.log("Rest time is over");
-        updateTime();
+        updateTimer();
       }
     }, 1000);
   };
   //TODO add cycles logic
-  //const cycle = (numOfReps: number) => {};
+  //   const cycle = (numOfReps: number) => {
+  // for (let i =0; i===numOfReps;i++)
+
+  //   };
 
   //TODO add pause function
   //TODO add restart current round progress
 
   const updateTimer = () => {
-    setWorkingTime(timeset.threeMinutes);
-    setRestTime(timeset.oneMinute);
-    if (currentRound !== timeset.totalRounds) {
-      setCurrentRound(currentRound + 1);
+    store.dispatch(resetTimer());
+    store.dispatch(incrementCurrentRound());
+    setWorkingTime(workingTime);
+    setRestTime(restingTime);
+    setCurrentRound(currentRound);
+    if (round !== totalRounds) {
+      // store.dispatch(incrementCurrentRound());
+      setCurrentRound(currentRound);
     }
   };
-  const resetTimer = () => {
-    setWorkingTime(timeset.threeMinutes);
-    setRestTime(timeset.oneMinute);
-    setCurrentRound(timeset.startRound);
-  };
+  // const resetTimer = () => {
+  //   setWorkingTime(timeset.threeMinutes);
+  //   setRestTime(timeset.oneMinute);
+  //   setCurrentRound(timeset.startRound);
+  // };
 
   return (
     <div data-testid="timer" className="timer">
@@ -130,7 +151,7 @@ export const Timer = () => {
         <div data-testid="field" className="field">
           <p data-testid="field-name">Раунд</p>
           <p data-testid="field-property">
-            {currentRound}/{rounds}
+            {round}/{rounds}
           </p>
         </div>
       </section>
