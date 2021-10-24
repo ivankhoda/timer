@@ -51,8 +51,7 @@ const resetTimer = () => {
 };
 
 export const Timer = () => {
-  const setRoundsStore = store.getState().setRounds;
-  const totalRounds = setRoundsStore;
+  const totalRounds = store.getState().setRounds;
   const workTime = store.getState().setWorkingTime;
   const restTime = store.getState().setRestingTime;
   const currentRound = store.getState().setCurrentRound;
@@ -64,8 +63,7 @@ export const Timer = () => {
   };
   const onDecrementButtonClicked = () => {
     store.getState().setRounds !== 1
-      ? //checkLimits(store.getState().setRounds, 1)
-        (store.dispatch(decrementRounds()), setRounds(store.getState().setRounds))
+      ? (store.dispatch(decrementRounds()), setRounds(store.getState().setRounds))
       : console.log("Reached limit");
   };
   const checkLimits = (value: number, limit: number) => {
@@ -87,8 +85,8 @@ export const Timer = () => {
   const [workingTime, setWorkingTime] = useState(workTime);
   const [restingTime, setRestTime] = useState(restTime);
   const [round, setCurrentRound] = useState(currentRound);
-  const [buttonOff, setButtonOff] = useState(false);
   //TODO Make button text depend on state
+  const [buttonOff, setButtonOff] = useState(false);
 
   const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
     let counter = workingSeconds - 1;
@@ -115,15 +113,26 @@ export const Timer = () => {
 
       if (counter < 0) {
         clearInterval(interval);
-        updateTimer();
+        updateTime();
       }
     }, 1000);
   };
   //TODO add cycles logic
-  //   const cycle = (numOfReps: number) => {
-  // for (let i =0; i===numOfReps;i++)
 
-  //   };
+  const cycles = [1, 1, 1];
+  let i = 0;
+  function start() {
+    startCycle(workingTime, restingTime, updateTimer);
+    const timeout = workingTime + restingTime;
+    i++;
+    console.log(i, "cycle");
+    console.log(cycles.length, "cycle lengh");
+    if (i === cycles.length) {
+      i = 0;
+      return;
+    }
+    setTimeout(start, cycles[i] * timeout * 1000);
+  }
 
   //TODO add pause function
   //TODO add restart current round progress
@@ -133,11 +142,8 @@ export const Timer = () => {
     store.dispatch(incrementCurrentRound());
     setWorkingTime(workingTime);
     setRestTime(restingTime);
-    setCurrentRound(currentRound);
-    if (round !== totalRounds) {
-      // store.dispatch(incrementCurrentRound());
-      setCurrentRound(currentRound);
-    }
+
+    setCurrentRound(store.getState().setCurrentRound);
   };
   // const resetTimer = () => {
   //   setWorkingTime(timeset.threeMinutes);
@@ -170,12 +176,7 @@ export const Timer = () => {
         </div>
       </section>
       <div data-testid="button-container" className="button-container">
-        <button
-          data-testid="start-button"
-          className="start-button"
-          onClick={() => startCycle(workingTime, restingTime, updateTimer)}
-          disabled={buttonOff}
-        >
+        <button data-testid="start-button" className="start-button" onClick={() => start()} disabled={buttonOff}>
           БОКС!
         </button>
         <button data-testid="cancel-button" className="cancel-button" onClick={() => resetTimer()}>

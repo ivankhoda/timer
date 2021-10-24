@@ -1,7 +1,7 @@
 import { DECREMENT_WORKING_TIME, INCREMENT_WORKING_TIME, RESET_TIMER, SET_WORKING_TIME } from "../actions/actions";
 
 const initialState = {
-  basicWorkingTime: 2,
+  basicWorkingTime: 3,
 };
 
 export const setWorkingTime = (state = initialState.basicWorkingTime, action: { type: string; payload?: number }) => {

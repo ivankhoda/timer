@@ -10,11 +10,9 @@ export const setCurrentRound = (
 ) => {
   switch (action.type) {
     case INCREMENT_CURRENT_ROUND:
-      console.log(state);
       return state + 1;
     case DECREMENT_CURRENT_ROUND:
-      console.log(state);
-      return state > 0 ? state - 1 : state;
+      return state - 1;
     case RESET_ROUNDS:
       return initialState.initialCurrentRound;
     default:
