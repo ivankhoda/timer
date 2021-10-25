@@ -9,6 +9,7 @@ import {
   INCREMENT_RESTING_TIME,
   INCREMENT_TOTAL_ROUNDS,
   INCREMENT_WORKING_TIME,
+  RESET_ROUNDS,
   RESET_TIMER,
   SET_ROUNDS,
 } from "../../actions/actions";
@@ -48,6 +49,9 @@ const decrementCurrentRound = () => {
 };
 const resetTimer = () => {
   return { type: RESET_TIMER };
+};
+const resetRounds = () => {
+  return { type: RESET_ROUNDS };
 };
 
 export const Timer = () => {
@@ -95,7 +99,6 @@ export const Timer = () => {
       store.dispatch(decrementWorkingTime(counter));
       setWorkingTime(store.getState().setWorkingTime);
       counter--;
-
       if (counter < 0) {
         clearInterval(interval);
         startRestTime(restingSeconds, updateTime);
@@ -110,29 +113,26 @@ export const Timer = () => {
       store.dispatch(decrementRestingTime(counter));
       setRestTime(store.getState().setRestingTime);
       counter--;
-
       if (counter < 0) {
         clearInterval(interval);
         updateTime();
       }
     }, 1000);
   };
-  //TODO add cycles logic
 
-  const cycles = [1, 1, 1];
+  // cycles logic
+  const cycles = totalRounds;
   let i = 0;
-  function start() {
+  const start = () => {
     startCycle(workingTime, restingTime, updateTimer);
-    const timeout = workingTime + restingTime;
+    const timeout = (workingTime + restingTime) * 1000;
     i++;
-    console.log(i, "cycle");
-    console.log(cycles.length, "cycle lengh");
-    if (i === cycles.length) {
+    if (i === cycles) {
       i = 0;
       return;
     }
-    setTimeout(start, cycles[i] * timeout * 1000);
-  }
+    setTimeout(start, timeout);
+  };
 
   //TODO add pause function
   //TODO add restart current round progress
@@ -142,14 +142,21 @@ export const Timer = () => {
     store.dispatch(incrementCurrentRound());
     setWorkingTime(workingTime);
     setRestTime(restingTime);
-
     setCurrentRound(store.getState().setCurrentRound);
   };
-  // const resetTimer = () => {
-  //   setWorkingTime(timeset.threeMinutes);
-  //   setRestTime(timeset.oneMinute);
-  //   setCurrentRound(timeset.startRound);
-  // };
+
+  const reset = () => {
+    console.log("reser btn");
+    store.dispatch(resetTimer());
+    store.dispatch(resetRounds());
+    setWorkingTime(workingTime);
+    setRestTime(restingTime);
+    setCurrentRound(store.getState().setCurrentRound);
+  };
+
+  const getInterv = () => {
+    console.log("get intervals information");
+  };
 
   return (
     <div data-testid="timer" className="timer">
@@ -179,16 +186,28 @@ export const Timer = () => {
         <button data-testid="start-button" className="start-button" onClick={() => start()} disabled={buttonOff}>
           БОКС!
         </button>
-        <button data-testid="cancel-button" className="cancel-button" onClick={() => resetTimer()}>
+        <button data-testid="cancel-button" className="cancel-button" onClick={() => reset()}>
           Сброс
+        </button>
+        <button data-testid="cancel-button" className="cancel-button" onClick={() => getInterv()}>
+          Get intervals
         </button>
         <button data-testid="settings-button" className="settings-button">
           Настройки
         </button>
       </div>
       <form className="setRounds-form" onSubmit={onSetRounds}>
-        <input placeholder="Введите количество раундов" type="number" min="1" max="99" name="rounds"></input>
-        <button type="submit">Set rounds</button>
+        <input
+          className="setRounds-form_input"
+          placeholder="Введите количество раундов"
+          type="number"
+          min="1"
+          max="99"
+          name="rounds"
+        ></input>
+        <button className="setRounds-form_button" type="submit">
+          Set rounds
+        </button>
       </form>
 
       <div className="incrementRounds-control">
