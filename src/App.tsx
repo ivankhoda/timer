@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { Timer } from "./components/Timer/Timer";
+import { TimerClass } from "./components/Timer/TimerClass";
 import "./style.scss";
 //TODO:fix type of App props, or refactor component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -10,6 +11,7 @@ export const App = (props: any) => {
     <div className="wrapper">
       <h1 data-testid="title">Welcome to timer App</h1>
       <Timer />
+      <TimerClass />
     </div>
   );
 };

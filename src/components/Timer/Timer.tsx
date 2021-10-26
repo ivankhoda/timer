@@ -1,58 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
-import {
-  DECREMENT_CURRENT_ROUND,
-  DECREMENT_RESTING_TIME,
-  DECREMENT_TOTAL_ROUNDS,
-  DECREMENT_WORKING_TIME,
-  INCREMENT_CURRENT_ROUND,
-  INCREMENT_RESTING_TIME,
-  INCREMENT_TOTAL_ROUNDS,
-  INCREMENT_WORKING_TIME,
-  RESET_ROUNDS,
-  RESET_TIMER,
-  SET_ROUNDS,
-} from "../../actions/actions";
 import { store } from "../../store/store";
-import { secondsToMinutes } from "../../utils";
+import {
+  decrementRestingTime,
+  decrementRounds,
+  decrementWorkingTime,
+  incrementCurrentRound,
+  incrementRounds,
+  resetRounds,
+  resetTimer,
+  secondsToMinutes,
+  set_rounds,
+} from "../../utils";
 import "./Timer.style.scss";
 //TODO:fix type of Timer props, or refactor component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
-const incrementRounds = () => {
-  return { type: INCREMENT_TOTAL_ROUNDS };
-};
-const decrementRounds = () => {
-  return { type: DECREMENT_TOTAL_ROUNDS };
-};
-const set_rounds = (payload: number) => {
-  return { type: SET_ROUNDS, payload: payload };
-};
-const incrementWorkingTime = (payload: number) => {
-  return { type: INCREMENT_WORKING_TIME, payload: payload };
-};
-const decrementWorkingTime = (payload: number) => {
-  return { type: DECREMENT_WORKING_TIME, payload: payload };
-};
-const incrementRestingTime = (payload: number) => {
-  return { type: INCREMENT_RESTING_TIME, payload: payload };
-};
-const decrementRestingTime = (payload: number) => {
-  return { type: DECREMENT_RESTING_TIME, payload: payload };
-};
-const incrementCurrentRound = () => {
-  return { type: INCREMENT_CURRENT_ROUND };
-};
-const decrementCurrentRound = () => {
-  return { type: DECREMENT_CURRENT_ROUND };
-};
-const resetTimer = () => {
-  return { type: RESET_TIMER };
-};
-const resetRounds = () => {
-  return { type: RESET_ROUNDS };
-};
 
 export const Timer = () => {
   const totalRounds = store.getState().setRounds;
@@ -90,11 +53,11 @@ export const Timer = () => {
   const [restingTime, setRestTime] = useState(restTime);
   const [round, setCurrentRound] = useState(currentRound);
   //TODO Make button text depend on state
-  const [buttonOff, setButtonOff] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
-    let counter = workingSeconds - 1;
-
+    let counter = workingSeconds;
+    toggle();
     const interval = setInterval(() => {
       store.dispatch(decrementWorkingTime(counter));
       setWorkingTime(store.getState().setWorkingTime);
@@ -107,7 +70,7 @@ export const Timer = () => {
   };
 
   const startRestTime = (seconds: number, updateTime: () => void) => {
-    let counter = seconds - 1;
+    let counter = seconds;
 
     const interval = setInterval(() => {
       store.dispatch(decrementRestingTime(counter));
@@ -125,16 +88,19 @@ export const Timer = () => {
   let i = 0;
   const start = () => {
     startCycle(workingTime, restingTime, updateTimer);
-    const timeout = (workingTime + restingTime) * 1000;
+    const sumOfWorkingTimeAndRestingTime = workingTime + restingTime;
+    const timeout = sumOfWorkingTimeAndRestingTime * 1000;
     i++;
     if (i === cycles) {
       i = 0;
       return;
     }
+
     setTimeout(start, timeout);
   };
 
   //TODO add pause function
+
   //TODO add restart current round progress
 
   const updateTimer = () => {
@@ -149,6 +115,7 @@ export const Timer = () => {
     console.log("reser btn");
     store.dispatch(resetTimer());
     store.dispatch(resetRounds());
+    setIsActive(false);
     setWorkingTime(workingTime);
     setRestTime(restingTime);
     setCurrentRound(store.getState().setCurrentRound);
@@ -156,6 +123,11 @@ export const Timer = () => {
 
   const getInterv = () => {
     console.log("get intervals information");
+  };
+
+  //TODO Make button text depend on state
+  const toggle = () => {
+    setIsActive(!isActive);
   };
 
   return (
@@ -183,8 +155,8 @@ export const Timer = () => {
         </div>
       </section>
       <div data-testid="button-container" className="button-container">
-        <button data-testid="start-button" className="start-button" onClick={() => start()} disabled={buttonOff}>
-          БОКС!
+        <button data-testid="start-button" className="start-button" onClick={() => start()}>
+          {isActive ? "Pause" : "Start"}
         </button>
         <button data-testid="cancel-button" className="cancel-button" onClick={() => reset()}>
           Сброс
