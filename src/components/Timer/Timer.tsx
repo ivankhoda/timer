@@ -90,7 +90,7 @@ export const Timer = () => {
   const [restingTime, setRestTime] = useState(restTime);
   const [round, setCurrentRound] = useState(currentRound);
   //TODO Make button text depend on state
-  const [buttonOff, setButtonOff] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
     let counter = workingSeconds - 1;
@@ -183,8 +183,8 @@ export const Timer = () => {
         </div>
       </section>
       <div data-testid="button-container" className="button-container">
-        <button data-testid="start-button" className="start-button" onClick={() => start()} disabled={buttonOff}>
-          БОКС!
+        <button data-testid="start-button" className="start-button" onClick={() => start()}>
+          {isActive ? "Pause" : "Start"}
         </button>
         <button data-testid="cancel-button" className="cancel-button" onClick={() => reset()}>
           Сброс
