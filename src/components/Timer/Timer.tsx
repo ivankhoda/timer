@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DECREMENT_CURRENT_ROUND,
   DECREMENT_RESTING_TIME,
@@ -91,59 +91,115 @@ export const Timer = () => {
   const [round, setCurrentRound] = useState(currentRound);
   //TODO Make button text depend on state
   const [isActive, setIsActive] = useState(false);
+  const [pause, setPause] = useState(false);
+  const [start, setStart] = useState(false);
+  const [rest, setRest] = useState(false);
 
-  const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
-    let counter = workingSeconds - 1;
+  // const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
 
-    const interval = setInterval(() => {
-      store.dispatch(decrementWorkingTime(counter));
-      setWorkingTime(store.getState().setWorkingTime);
-      counter--;
-      if (counter < 0) {
-        clearInterval(interval);
-        startRestTime(restingSeconds, updateTime);
-      }
-    }, 1000);
+  // };
+  const startCycle = () => {
+    setStart(true);
   };
+  useEffect(() => {
+    let counter = workingTime - 1;
+    if (start === true) {
+      const interval = setInterval(() => {
+        console.log("tick");
+        store.dispatch(decrementWorkingTime(counter));
+        setWorkingTime(store.getState().setWorkingTime);
+        // // pause === true ? clearInterval(interval) : counter--;
+        counter--;
 
-  const startRestTime = (seconds: number, updateTime: () => void) => {
-    let counter = seconds - 1;
+        // console.log(pause === true, "pause in work timer");
+        // pause === true ? clearInterval(interval) : console.log("pause");
+        // counter--;
+        if (counter < 0) {
+          setStart(false);
+          setRest(true);
+          //clearInterval(interval);
+          //startRestTime(restingTime, updateTimer);
+        }
+      }, 1000);
 
-    const interval = setInterval(() => {
-      store.dispatch(decrementRestingTime(counter));
-      setRestTime(store.getState().setRestingTime);
-      counter--;
-      if (counter < 0) {
-        clearInterval(interval);
-        updateTime();
-      }
-    }, 1000);
-  };
+      //pause === true ? clearInterval(interval) : console.log("pause");
+      return () => clearInterval(interval);
+    }
+
+    if (rest === true) {
+      let counter1 = restingTime - 1;
+      // console.log(pause, "pause");
+      const interval1 = setInterval(() => {
+        store.dispatch(decrementRestingTime(counter));
+        setRestTime(store.getState().setRestingTime);
+        //   //pause === true ?  :
+        //   console.log(pause, "pause in rest timer");
+        //   if (pause === true) {
+        //     clearInterval(interval);
+        //   }
+        console.log(counter1, "clack");
+        counter1--;
+        if (counter1 < 0) {
+          setRest(false);
+          //updateTimer();
+        }
+      }, 1000);
+      return () => clearInterval(interval1);
+    }
+    const startRestTime = (seconds: number, updateTime: () => void) => {
+      let counter1 = seconds - 1;
+      // console.log(pause, "pause");
+      const interval1 = setInterval(() => {
+        //   store.dispatch(decrementRestingTime(counter));
+        //   setRestTime(store.getState().setRestingTime);
+        //   //pause === true ?  :
+        //   console.log(pause, "pause in rest timer");
+        //   if (pause === true) {
+        //     clearInterval(interval);
+        //   }
+        console.log(counter1, "clack");
+        counter1--;
+        //   if (counter < 0) {
+        //     clearInterval(interval);
+        //     updateTime();
+        //   }
+      }, 1000);
+      return () => clearInterval(interval1);
+    };
+    const updateTimer = () => {
+      store.dispatch(resetTimer());
+      store.dispatch(incrementCurrentRound());
+      setWorkingTime(workingTime);
+      setRestTime(restingTime);
+      setCurrentRound(store.getState().setCurrentRound);
+    };
+  }, [pause, rest, restingTime, start, workingTime]);
 
   // cycles logic
-  const cycles = totalRounds;
-  let i = 0;
-  const start = () => {
-    startCycle(workingTime, restingTime, updateTimer);
-    const timeout = (workingTime + restingTime) * 1000;
-    i++;
-    if (i === cycles) {
-      i = 0;
-      return;
-    }
-    setTimeout(start, timeout);
-  };
+  // const cycles = totalRounds;
+  // let i = 0;
+  // const start = () => {
+  //   startCycle(workingTime, restingTime, updateTimer);
+  //   const timeout = (workingTime + restingTime) * 1000;
+  //   i++;
+  //   if (i === cycles) {
+  //     i = 0;
+  //     return;
+  //   }
+  //   const cycle = setTimeout(start, timeout);
+  //   pause === true ? clearTimeout(cycle) : cycle;
+  // };
 
   //TODO add pause function
-  //TODO add restart current round progress
 
-  const updateTimer = () => {
-    store.dispatch(resetTimer());
-    store.dispatch(incrementCurrentRound());
-    setWorkingTime(workingTime);
-    setRestTime(restingTime);
-    setCurrentRound(store.getState().setCurrentRound);
+  const makePause = () => {
+    //pause === false ? setPause(true) : setPause(false);
+    setPause(true);
+    setStart(false);
+    //clearInterval()
+    console.log(pause);
   };
+  //TODO add restart current round progress
 
   const reset = () => {
     console.log("reser btn");
@@ -153,7 +209,13 @@ export const Timer = () => {
     setRestTime(restingTime);
     setCurrentRound(store.getState().setCurrentRound);
   };
-
+  const updateTimer = () => {
+    store.dispatch(resetTimer());
+    store.dispatch(incrementCurrentRound());
+    setWorkingTime(workingTime);
+    setRestTime(restingTime);
+    setCurrentRound(store.getState().setCurrentRound);
+  };
   const getInterv = () => {
     console.log("get intervals information");
   };
@@ -183,14 +245,14 @@ export const Timer = () => {
         </div>
       </section>
       <div data-testid="button-container" className="button-container">
-        <button data-testid="start-button" className="start-button" onClick={() => start()}>
+        <button data-testid="start-button" className="start-button" onClick={() => startCycle()}>
           {isActive ? "Pause" : "Start"}
         </button>
         <button data-testid="cancel-button" className="cancel-button" onClick={() => reset()}>
           Сброс
         </button>
-        <button data-testid="cancel-button" className="cancel-button" onClick={() => getInterv()}>
-          Get intervals
+        <button data-testid="cancel-button" className="cancel-button" onClick={() => makePause()}>
+          Pause
         </button>
         <button data-testid="settings-button" className="settings-button">
           Настройки
