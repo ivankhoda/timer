@@ -21,29 +21,38 @@
   display: flex;
   flex-direction: column;
 }
-.increment-control_buttons .setRounds-form {
+.increment-control_buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 button {
-  color: aliceblue;
   border-radius: var(--RADIUS-MEDUIM);
+  border: solid black;
+  padding: var(--SPACE-SMALL);
+  margin: 5px;
+  background-color: var(--BACKGROUND-COLOR);
 }
 .start-button {
-  background-color: var(--PRIMARY-BUTTON);
-
-  padding: var(--SPACE-SMALL);
-  border: solid white;
+  
 }
 .cancel-button {
-  background-color: var(--SECONDARY-BUTTON);
-  margin-top: var(--SPACE-SMALL);
-
-  border: none;
 }
 .settings-button {
-  background-color: var(--NEUTRAL-BUTTON);
   //margin:
-  border: none;
+}
+.setRounds-form {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(2, 50%);
+}
+.setRounds-form_input {
+}
+.setRounds-form_button {
+}
+.incrementRounds-control_buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

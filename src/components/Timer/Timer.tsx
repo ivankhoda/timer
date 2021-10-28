@@ -1,49 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
-import {
-  DECREMENT_RESTING_TIME,
-  DECREMENT_TOTAL_ROUNDS,
-  DECREMENT_WORKING_TIME,
-  INCREMENT_RESTING_TIME,
-  INCREMENT_TOTAL_ROUNDS,
-  INCREMENT_WORKING_TIME,
-  SET_ROUNDS,
-} from "../../actions/actions";
+import React, { useEffect, useState } from "react";
 import { store } from "../../store/store";
-import { secondsToMinutes } from "../../utils";
+import {
+  decrementRestingTime,
+  decrementRounds,
+  decrementWorkingTime,
+  incrementCurrentRound,
+  incrementRounds,
+  resetRounds,
+  resetTimer,
+  secondsToMinutes,
+  set_rounds,
+} from "../../utils";
 import "./Timer.style.scss";
-import { timeset } from "./timeset";
 //TODO:fix type of Timer props, or refactor component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
-const incrementRounds = () => {
-  return { type: INCREMENT_TOTAL_ROUNDS };
-};
-const decrementRounds = () => {
-  return { type: DECREMENT_TOTAL_ROUNDS };
-};
-const set_rounds = (payload: number) => {
-  return { type: SET_ROUNDS, payload: payload };
-};
-const incrementWorkingTime = (payload: number) => {
-  return { type: INCREMENT_WORKING_TIME, payload: payload };
-};
-const decrementWorkingTime = (payload: number) => {
-  return { type: DECREMENT_WORKING_TIME, payload: payload };
-};
-const incrementRestingTime = (payload: number) => {
-  return { type: INCREMENT_RESTING_TIME, payload: payload };
-};
-const decrementRestingTime = (payload: number) => {
-  return { type: DECREMENT_RESTING_TIME, payload: payload };
-};
-
 export const Timer = () => {
-  const setRoundsStore = store.getState().setRounds;
-  const totalRounds = setRoundsStore;
+  const totalRounds = store.getState().setRounds;
   const workTime = store.getState().setWorkingTime;
   const restTime = store.getState().setRestingTime;
+  const currentRound = store.getState().setCurrentRound;
 
   const onIncrementButtonClicked = () => {
     store.getState().setRounds !== 99
@@ -52,8 +29,7 @@ export const Timer = () => {
   };
   const onDecrementButtonClicked = () => {
     store.getState().setRounds !== 1
-      ? //checkLimits(store.getState().setRounds, 1)
-        (store.dispatch(decrementRounds()), setRounds(store.getState().setRounds))
+      ? (store.dispatch(decrementRounds()), setRounds(store.getState().setRounds))
       : console.log("Reached limit");
   };
   const checkLimits = (value: number, limit: number) => {
@@ -74,54 +50,122 @@ export const Timer = () => {
   const [rounds, setRounds] = useState(totalRounds);
   const [workingTime, setWorkingTime] = useState(workTime);
   const [restingTime, setRestTime] = useState(restTime);
-  const [currentRound, setCurrentRound] = useState(timeset.startRound);
-  const [buttonOff, setButtonOff] = useState(false);
+  const [round, setCurrentRound] = useState(currentRound);
   //TODO Make button text depend on state
+  const [isActive, setIsActive] = useState(false);
+  const [pause, setPause] = useState(false);
+  const [start, setStart] = useState(false);
+  const [rest, setRest] = useState(false);
 
-  const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
-    let counter = workingSeconds - 1;
+  // const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
 
-    const interval = setInterval(() => {
-      store.dispatch(decrementWorkingTime(counter));
-      counter--;
-      if (counter < 0) {
-        clearInterval(interval);
-        console.log("Working time is over");
-        startRestTime(restingSeconds, updateTime);
-      }
-    }, 1000);
+  // };
+  const startCycle = () => {
+    setStart(true);
   };
-
-  const startRestTime = (seconds: number, updateTime: () => void) => {
-    let counter = seconds - 1;
-
-    const interval = setInterval(() => {
-      store.dispatch(decrementRestingTime(counter));
-      counter--;
-      if (counter < 0) {
-        clearInterval(interval);
-        console.log("Rest time is over");
-        updateTime();
-      }
-    }, 1000);
-  };
-  //TODO add cycles logic
-  //const cycle = (numOfReps: number) => {};
-
   //TODO add pause function
+  const makePause = () => {
+    setPause(true);
+    setStart(false);
+  };
+  useEffect(() => {
+    let counter = workingTime - 1;
+    if (start === true) {
+      const interval = setInterval(() => {
+        store.dispatch(decrementWorkingTime(counter));
+        setWorkingTime(store.getState().setWorkingTime);
+        counter--;
+        if (counter < 0) {
+          setStart(false);
+          setRest(true);
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+    let counter1 = restTime - 1;
+    if (rest === true) {
+      const interval1 = setInterval(() => {
+        store.dispatch(decrementRestingTime(counter1));
+        setRestTime(store.getState().setRestingTime);
+
+        counter1--;
+        if (counter1 < 0) {
+          store.dispatch(resetTimer());
+          store.dispatch(incrementCurrentRound());
+          setCurrentRound(store.getState().setCurrentRound);
+          console.log(workingTime, restingTime);
+          // setWorkingTime(workTime);
+          // setRestTime(restTime);
+          //
+          setRest(false);
+        }
+      }, 1000);
+      return () => clearInterval(interval1);
+    }
+    const startRestTime = (seconds: number, updateTime: () => void) => {
+      let counter1 = seconds - 1;
+      // console.log(pause, "pause");
+      const interval1 = setInterval(() => {
+        //   store.dispatch(decrementRestingTime(counter));
+        //   setRestTime(store.getState().setRestingTime);
+        //   //pause === true ?  :
+        //   console.log(pause, "pause in rest timer");
+        //   if (pause === true) {
+        //     clearInterval(interval);
+        //   }
+        console.log(counter1, "clack");
+        counter1--;
+        //   if (counter < 0) {
+        //     clearInterval(interval);
+        //     updateTime();
+        //   }
+      }, 1000);
+      return () => clearInterval(interval1);
+    };
+    const updateTimer = () => {
+      store.dispatch(resetTimer());
+      store.dispatch(incrementCurrentRound());
+      setWorkingTime(workTime);
+      setRestTime(restTime);
+      setCurrentRound(store.getState().setCurrentRound);
+    };
+  }, [pause, rest, restTime, restingTime, start, workTime, workingTime]);
+
+  // cycles logic
+  // const cycles = totalRounds;
+  // let i = 0;
+  // const start = () => {
+  //   startCycle(workingTime, restingTime, updateTimer);
+  //   const timeout = (workingTime + restingTime) * 1000;
+  //   i++;
+  //   if (i === cycles) {
+  //     i = 0;
+  //     return;
+  //   }
+  //   const cycle = setTimeout(start, timeout);
+  //   pause === true ? clearTimeout(cycle) : cycle;
+  // };
+
   //TODO add restart current round progress
 
-  const updateTimer = () => {
-    setWorkingTime(timeset.threeMinutes);
-    setRestTime(timeset.oneMinute);
-    if (currentRound !== timeset.totalRounds) {
-      setCurrentRound(currentRound + 1);
-    }
+  const reset = () => {
+    console.log("reser btn");
+    store.dispatch(resetTimer());
+    store.dispatch(resetRounds());
+    setWorkingTime(workingTime);
+    setRestTime(restingTime);
+    setCurrentRound(store.getState().setCurrentRound);
   };
-  const resetTimer = () => {
-    setWorkingTime(timeset.threeMinutes);
-    setRestTime(timeset.oneMinute);
-    setCurrentRound(timeset.startRound);
+  const updateTimer = () => {
+    store.dispatch(resetTimer());
+    store.dispatch(incrementCurrentRound());
+    setWorkingTime(workingTime);
+    setRestTime(restingTime);
+    setCurrentRound(store.getState().setCurrentRound);
+  };
+  const getInterv = () => {
+    console.log("get intervals information");
   };
 
   return (
@@ -130,7 +174,7 @@ export const Timer = () => {
         <div data-testid="field" className="field">
           <p data-testid="field-name">Раунд</p>
           <p data-testid="field-property">
-            {currentRound}/{rounds}
+            {round}/{rounds}
           </p>
         </div>
       </section>
@@ -149,24 +193,31 @@ export const Timer = () => {
         </div>
       </section>
       <div data-testid="button-container" className="button-container">
-        <button
-          data-testid="start-button"
-          className="start-button"
-          onClick={() => startCycle(workingTime, restingTime, updateTimer)}
-          disabled={buttonOff}
-        >
-          БОКС!
+        <button data-testid="start-button" className="start-button" onClick={() => startCycle()}>
+          {isActive ? "Pause" : "Start"}
         </button>
-        <button data-testid="cancel-button" className="cancel-button" onClick={() => resetTimer()}>
+        <button data-testid="cancel-button" className="cancel-button" onClick={() => reset()}>
           Сброс
+        </button>
+        <button data-testid="cancel-button" className="cancel-button" onClick={() => makePause()}>
+          Pause
         </button>
         <button data-testid="settings-button" className="settings-button">
           Настройки
         </button>
       </div>
       <form className="setRounds-form" onSubmit={onSetRounds}>
-        <input placeholder="Введите количество раундов" type="number" min="1" max="99" name="rounds"></input>
-        <button type="submit">Set rounds</button>
+        <input
+          className="setRounds-form_input"
+          placeholder="Введите количество раундов"
+          type="number"
+          min="1"
+          max="99"
+          name="rounds"
+        ></input>
+        <button className="setRounds-form_button" type="submit">
+          Set rounds
+        </button>
       </form>
 
       <div className="incrementRounds-control">

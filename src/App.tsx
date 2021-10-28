@@ -7,7 +7,7 @@ import "./style.scss";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const App = (props: any) => {
   return (
-    <div>
+    <div className="wrapper">
       <h1 data-testid="title">Welcome to timer App</h1>
       <Timer />
     </div>
