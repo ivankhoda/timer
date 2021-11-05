@@ -5,12 +5,15 @@ const initialState = {
 };
 
 export const setWorkingTime = (state = initialState.basicWorkingTime, action: { type: string; payload?: number }) => {
+  console.log(action.type);
+
   switch (action.type) {
     case INCREMENT_WORKING_TIME:
       return state + 1;
     case DECREMENT_WORKING_TIME:
       return state > 0 ? state - 1 : state;
     case RESET_TIMER:
+      console.log(action.type);
       return initialState.basicWorkingTime;
     case SET_WORKING_TIME:
       action.payload !== null || undefined ? action.payload : state;

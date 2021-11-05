@@ -88,7 +88,6 @@ export const Timer = () => {
       const interval1 = setInterval(() => {
         store.dispatch(decrementRestingTime(counter1));
         setRestTime(store.getState().setRestingTime);
-
         counter1--;
         if (counter1 < 0) {
           store.dispatch(resetTimer());
