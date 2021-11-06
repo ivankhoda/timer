@@ -57,9 +57,6 @@ export const Timer = () => {
   const [start, setStart] = useState(false);
   const [rest, setRest] = useState(false);
 
-  // const startCycle = (workingSeconds: number, restingSeconds: number, updateTime: () => void) => {
-
-  // };
   const startCycle = () => {
     setStart(true);
   };
@@ -90,61 +87,21 @@ export const Timer = () => {
         setRestTime(store.getState().setRestingTime);
         counter1--;
         if (counter1 < 0) {
-          store.dispatch(resetTimer());
-          store.dispatch(incrementCurrentRound());
-          setCurrentRound(store.getState().setCurrentRound);
-          console.log(workingTime, restingTime);
-          // setWorkingTime(workTime);
-          // setRestTime(restTime);
-          //
+          updateTimer();
           setRest(false);
         }
       }, 1000);
       return () => clearInterval(interval1);
     }
-    const startRestTime = (seconds: number, updateTime: () => void) => {
-      let counter1 = seconds - 1;
-      // console.log(pause, "pause");
-      const interval1 = setInterval(() => {
-        //   store.dispatch(decrementRestingTime(counter));
-        //   setRestTime(store.getState().setRestingTime);
-        //   //pause === true ?  :
-        //   console.log(pause, "pause in rest timer");
-        //   if (pause === true) {
-        //     clearInterval(interval);
-        //   }
-        console.log(counter1, "clack");
-        counter1--;
-        //   if (counter < 0) {
-        //     clearInterval(interval);
-        //     updateTime();
-        //   }
-      }, 1000);
-      return () => clearInterval(interval1);
-    };
-    const updateTimer = () => {
-      store.dispatch(resetTimer());
-      store.dispatch(incrementCurrentRound());
-      setWorkingTime(workTime);
-      setRestTime(restTime);
-      setCurrentRound(store.getState().setCurrentRound);
-    };
   }, [pause, rest, restTime, restingTime, start, workTime, workingTime]);
-
+  const updateTimer = () => {
+    store.dispatch(resetTimer());
+    store.dispatch(incrementCurrentRound());
+    setCurrentRound(store.getState().setCurrentRound);
+    setWorkingTime(store.getState().setWorkingTime);
+    setRestTime(store.getState().setRestingTime);
+  };
   // cycles logic
-  // const cycles = totalRounds;
-  // let i = 0;
-  // const start = () => {
-  //   startCycle(workingTime, restingTime, updateTimer);
-  //   const timeout = (workingTime + restingTime) * 1000;
-  //   i++;
-  //   if (i === cycles) {
-  //     i = 0;
-  //     return;
-  //   }
-  //   const cycle = setTimeout(start, timeout);
-  //   pause === true ? clearTimeout(cycle) : cycle;
-  // };
 
   //TODO add restart current round progress
 
@@ -156,13 +113,7 @@ export const Timer = () => {
     setRestTime(restingTime);
     setCurrentRound(store.getState().setCurrentRound);
   };
-  const updateTimer = () => {
-    store.dispatch(resetTimer());
-    store.dispatch(incrementCurrentRound());
-    setWorkingTime(workingTime);
-    setRestTime(restingTime);
-    setCurrentRound(store.getState().setCurrentRound);
-  };
+
   const getInterv = () => {
     console.log("get intervals information");
   };

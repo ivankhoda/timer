@@ -4,7 +4,6 @@ const initialState = {
 };
 
 export const setRestingTime = (state = initialState.basicRestingTime, action: { type: string; payload?: number }) => {
-  console.log(action.type);
   switch (action.type) {
     case INCREMENT_RESTING_TIME:
       return state + 1;
