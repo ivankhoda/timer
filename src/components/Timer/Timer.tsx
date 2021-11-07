@@ -9,9 +9,11 @@ import {
   incrementRounds,
   resetRounds,
   resetTimer,
-  secondsToMinutes,
   set_rounds,
 } from "../../utils";
+import { ControlButton } from "../ControlButton/ControlButton";
+import { Rounds } from "../Rounds/Rounds";
+import { TimeDisplay } from "../TimeDisplay/TimeDisplay";
 import "./Timer.style.scss";
 //TODO:fix type of Timer props, or refactor component
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,9 +39,12 @@ export const Timer = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSetRounds = (e: any) => {
+  const onSetRounds = (e: React.FormEvent): void => {
     e.preventDefault();
-    const payload = e.target.rounds.value;
+    console.log(e);
+    const inputValue = (document.getElementById("inputRounds") as HTMLInputElement).value;
+    const payload = parseInt(inputValue);
+
     store.getState().setRounds !== 1 || store.getState().setRounds !== 99
       ? (store.dispatch(set_rounds(payload)), setRounds(store.getState().setRounds))
       : console.log("something wrong");
@@ -53,21 +58,22 @@ export const Timer = () => {
   const [round, setCurrentRound] = useState(currentRound);
   //TODO Make button text depend on state
   const [isActive, setIsActive] = useState(false);
-  const [pause, setPause] = useState(false);
+  const [pause, setPause] = useState<boolean | undefined>();
   const [start, setStart] = useState(false);
   const [rest, setRest] = useState(false);
 
   const startCycle = () => {
     setStart(true);
+    setPause(false);
   };
   //TODO add pause function
   const makePause = () => {
     setPause(true);
-    setStart(false);
+    // setStart(false);
   };
   useEffect(() => {
     let counter = workingTime - 1;
-    if (start === true) {
+    if (start === true && pause === false) {
       const interval = setInterval(() => {
         store.dispatch(decrementWorkingTime(counter));
         setWorkingTime(store.getState().setWorkingTime);
@@ -81,7 +87,7 @@ export const Timer = () => {
       return () => clearInterval(interval);
     }
     let counter1 = restTime - 1;
-    if (rest === true) {
+    if (rest === true && pause === false) {
       const interval1 = setInterval(() => {
         store.dispatch(decrementRestingTime(counter1));
         setRestTime(store.getState().setRestingTime);
@@ -89,94 +95,64 @@ export const Timer = () => {
         if (counter1 < 0) {
           updateTimer();
           setRest(false);
+          console.log(currentRound, totalRounds);
+          if (currentRound !== totalRounds) {
+            startCycle();
+          }
         }
       }, 1000);
       return () => clearInterval(interval1);
     }
-  }, [pause, rest, restTime, restingTime, start, workTime, workingTime]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentRound, pause, rest, restTime, restingTime, start, totalRounds, workTime, workingTime]);
+
+  // cycles logic
   const updateTimer = () => {
     store.dispatch(resetTimer());
-    store.dispatch(incrementCurrentRound());
-    setCurrentRound(store.getState().setCurrentRound);
-    setWorkingTime(store.getState().setWorkingTime);
-    setRestTime(store.getState().setRestingTime);
-  };
-  // cycles logic
 
+    if (currentRound !== totalRounds) {
+      store.dispatch(incrementCurrentRound());
+      setCurrentRound(store.getState().setCurrentRound);
+      setWorkingTime(store.getState().setWorkingTime);
+      setRestTime(store.getState().setRestingTime);
+    }
+  };
   //TODO add restart current round progress
 
   const reset = () => {
     console.log("reser btn");
     store.dispatch(resetTimer());
     store.dispatch(resetRounds());
-    setWorkingTime(workingTime);
-    setRestTime(restingTime);
     setCurrentRound(store.getState().setCurrentRound);
-  };
-
-  const getInterv = () => {
-    console.log("get intervals information");
+    setWorkingTime(store.getState().setWorkingTime);
+    setRestTime(store.getState().setRestingTime);
   };
 
   return (
-    <div data-testid="timer" className="timer">
-      <section data-testid="section" className="section">
-        <div data-testid="field" className="field">
-          <p data-testid="field-name">Раунд</p>
-          <p data-testid="field-property">
-            {round}/{rounds}
-          </p>
+    <>
+      <div data-testid="timer" className="timer">
+        <Rounds currentRound={currentRound} totalRounds={totalRounds} />
+        <TimeDisplay name="work" time={workTime} />
+        <TimeDisplay name="rest" time={restTime} />
+        <div data-testid="button-container" className="button-container">
+          <ControlButton name="Start" onClick={startCycle} />
+          <ControlButton name="Reset" onClick={reset} />
+          <ControlButton name="Pause" onClick={makePause} />
+          <button data-testid="settings-button" className="settings-button">
+            Настройки
+          </button>
         </div>
-      </section>
-      <section data-testid="section" className="section">
-        <div data-testid="field" className="field">
-          <p data-testid="field-name">Работа</p>
-          <p data-testid="field-property" className="working-time">
-            {secondsToMinutes(workingTime)}
-          </p>
-        </div>
-      </section>
-      <section data-testid="section" className="section">
-        <div data-testid="field" className="field">
-          <p data-testid="field-name">Отдых</p>
-          <p data-testid="field-property">{secondsToMinutes(restingTime)}</p>
-        </div>
-      </section>
-      <div data-testid="button-container" className="button-container">
-        <button data-testid="start-button" className="start-button" onClick={() => startCycle()}>
-          {isActive ? "Pause" : "Start"}
-        </button>
-        <button data-testid="cancel-button" className="cancel-button" onClick={() => reset()}>
-          Сброс
-        </button>
-        <button data-testid="cancel-button" className="cancel-button" onClick={() => makePause()}>
-          Pause
-        </button>
-        <button data-testid="settings-button" className="settings-button">
-          Настройки
-        </button>
-      </div>
-      <form className="setRounds-form" onSubmit={onSetRounds}>
-        <input
-          className="setRounds-form_input"
-          placeholder="Введите количество раундов"
-          type="number"
-          min="1"
-          max="99"
-          name="rounds"
-        ></input>
-        <button className="setRounds-form_button" type="submit">
-          Set rounds
-        </button>
-      </form>
 
-      <div className="incrementRounds-control">
-        <label>Используйте кнопки, чтобы установить количество раундов</label>
-        <div className="incrementRounds-control_buttons">
-          <button onClick={onIncrementButtonClicked}>+</button>
-          <button onClick={onDecrementButtonClicked}>-</button>
+        {/* <Form placeHolder="Введите количество раундов" onSubmit={onSetRounds} inputId="rounds" /> */}
+
+        <div className="incrementRounds-control">
+          <label>Используйте кнопки, чтобы установить количество раундов</label>
+          <div className="incrementRounds-control_buttons">
+            <button onClick={onIncrementButtonClicked}>+</button>
+            <button onClick={onDecrementButtonClicked}>-</button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
