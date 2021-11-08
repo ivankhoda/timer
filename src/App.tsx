@@ -10,6 +10,7 @@ export const App = (props: any) => {
     <div className="wrapper">
       <h1 data-testid="title">Welcome to timer App</h1>
       <Timer />
+      {/* <SettingsPage /> */}
     </div>
   );
 };
