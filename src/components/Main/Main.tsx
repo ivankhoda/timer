@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { store } from "../../store/store";
+import { store } from "../../store";
 import {
   decrementRestingTime,
   decrementRounds,
@@ -13,13 +13,9 @@ import {
 } from "../../utils";
 import { ControlButton } from "../ControlButton/ControlButton";
 import { Rounds } from "../Rounds/Rounds";
-import { SettingButton } from "../SettingsButton/SettingsButton";
 import { TimeDisplay } from "../TimeDisplay/TimeDisplay";
-import "./Timer.style.scss";
-//TODO:fix type of Timer props, or refactor component
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Timer = () => {
+
+export const Main = () => {
   const totalRounds = store.getState().setRounds;
   const workTime = store.getState().setWorkingTime;
   const restTime = store.getState().setRestingTime;
@@ -130,26 +126,23 @@ export const Timer = () => {
   };
 
   return (
-    <>
-      <div data-testid="timer" className="timer">
-        <Rounds currentRound={currentRound} totalRounds={totalRounds} />
-        <TimeDisplay name="work" time={workTime} />
-        <TimeDisplay name="rest" time={restTime} />
-        <div data-testid="button-container" className="button-container">
-          <ControlButton name="Start" onClick={startCycle} />
-          <ControlButton name="Reset" onClick={reset} />
-          <ControlButton name="Pause" onClick={makePause} />
-        </div>
-
-        <div className="incrementRounds-control">
-          <label>Используйте кнопки, чтобы установить количество раундов</label>
-          <div className="incrementRounds-control_buttons">
-            <button onClick={onIncrementButtonClicked}>+</button>
-            <button onClick={onDecrementButtonClicked}>-</button>
-          </div>
-        </div>
-        <SettingButton />
+    <div data-testid="timer" className="timer">
+      <Rounds currentRound={currentRound} totalRounds={totalRounds} />
+      <TimeDisplay name="work" time={workTime} />
+      <TimeDisplay name="rest" time={restTime} />
+      <div data-testid="button-container" className="button-container">
+        <ControlButton name="Start" onClick={startCycle} />
+        <ControlButton name="Reset" onClick={reset} />
+        <ControlButton name="Pause" onClick={makePause} />
       </div>
-    </>
+
+      <div className="incrementRounds-control">
+        <label>Используйте кнопки, чтобы установить количество раундов</label>
+        <div className="incrementRounds-control_buttons">
+          <button onClick={onIncrementButtonClicked}>+</button>
+          <button onClick={onDecrementButtonClicked}>-</button>
+        </div>
+      </div>
+    </div>
   );
 };
