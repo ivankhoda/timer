@@ -1,7 +1,9 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import { Configuration } from "webpack";
+
 const config: Configuration = {
   entry: "./src/index.tsx",
 
@@ -36,9 +38,11 @@ const config: Configuration = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
+    publicPath: "/",
   },
   devServer: {
     static: path.join(__dirname, "build"),
+    historyApiFallback: true,
     compress: true,
     port: 4000,
   },
@@ -51,6 +55,9 @@ const config: Configuration = {
       },
     }),
     new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      template: "../index.html",
+    }),
   ],
 };
 
