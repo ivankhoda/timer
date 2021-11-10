@@ -1,10 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const LinkToSettings = () => {
+type ButtonProps = {
+  linkTo: string;
+  text: string;
+};
+
+export const LinkButton = (props: ButtonProps) => {
+  const link = props.linkTo;
+  const text = props.text;
   return (
-    <Link to={"/settings"} data-testid="settings-button" className="settings-button">
-      Settings
+    <Link to={`${link}`} data-testid="settings-button" className="settings-button">
+      {text}
     </Link>
   );
 };

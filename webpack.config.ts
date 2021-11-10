@@ -1,5 +1,4 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import { Configuration } from "webpack";
@@ -55,9 +54,9 @@ const config: Configuration = {
       },
     }),
     new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      template: "../index.html",
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: "../index.html",
+    // }),
   ],
 };
 

@@ -13,7 +13,7 @@ import {
 } from "../../utils";
 import { ControlButton } from "../ControlButton/ControlButton";
 import { Rounds } from "../Rounds/Rounds";
-import { LinkToSettings } from "../SettingsButton/SettingsButton";
+import { LinkButton } from "../SettingsButton/SettingsButton";
 import { TimeDisplay } from "../TimeDisplay/TimeDisplay";
 import "./Timer.style.scss";
 //TODO:fix type of Timer props, or refactor component
@@ -148,7 +148,7 @@ export const Timer = () => {
             <button onClick={onDecrementButtonClicked}>-</button>
           </div>
         </div>
-        <LinkToSettings />
+        <LinkButton linkTo="settings" text="Settings" />
       </div>
     </>
   );
