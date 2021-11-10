@@ -13,6 +13,7 @@
     "noEmit": true,
     "jsx": "react"
   },
+  "typeRoots": ["node_modules/@types", "custom_typings/"],
   "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.mock.ts"]
 }

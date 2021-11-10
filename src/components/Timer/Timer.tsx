@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
+import useSound from "use-sound";
+import reminder_sound from "../../sounds/reminder_sound.mp3";
+import start_sound from "../../sounds/start_sound.mp3";
 import { store } from "../../store/store";
 import {
   decrementRestingTime,
@@ -13,10 +16,10 @@ import {
 } from "../../utils";
 import { ControlButton } from "../ControlButton/ControlButton";
 import { Rounds } from "../Rounds/Rounds";
-import { LinkToSettings } from "../SettingsButton/SettingsButton";
+import { LinkButton } from "../SettingsButton/SettingsButton";
 import { TimeDisplay } from "../TimeDisplay/TimeDisplay";
 import "./Timer.style.scss";
-//TODO:fix type of Timer props, or refactor component
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Timer = () => {
@@ -24,6 +27,10 @@ export const Timer = () => {
   const workTime = store.getState().setWorkingTime;
   const restTime = store.getState().setRestingTime;
   const currentRound = store.getState().setCurrentRound;
+  const [play, { stop }] = useSound(start_sound);
+  const [remind] = useSound(reminder_sound);
+  const remindBefore = 10;
+  console.log(reminder_sound);
 
   const onIncrementButtonClicked = () => {
     store.getState().setRounds !== 99
@@ -39,7 +46,6 @@ export const Timer = () => {
     value !== limit ? console.log("limit not reached yet") : console.log("limit reached");
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSetRounds = (e: React.FormEvent): void => {
     e.preventDefault();
     console.log(e);
@@ -64,20 +70,25 @@ export const Timer = () => {
   const [rest, setRest] = useState(false);
 
   const startCycle = () => {
+    play();
     setStart(true);
     setPause(false);
   };
-  //TODO add pause function
+
   const makePause = () => {
     setPause(true);
-    // setStart(false);
+    setStart(false);
   };
   useEffect(() => {
     let counter = workingTime - 1;
+
     if (start === true && pause === false) {
       const interval = setInterval(() => {
         store.dispatch(decrementWorkingTime(counter));
         setWorkingTime(store.getState().setWorkingTime);
+        if (counter === remindBefore) {
+          remind();
+        }
         counter--;
         if (counter < 0) {
           setStart(false);
@@ -148,7 +159,7 @@ export const Timer = () => {
             <button onClick={onDecrementButtonClicked}>-</button>
           </div>
         </div>
-        <LinkToSettings />
+        <LinkButton linkTo="settings" text="Settings" />
       </div>
     </>
   );

@@ -1,5 +1,4 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import { Configuration } from "webpack";
@@ -30,6 +29,13 @@ const config: Configuration = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.mp3$/,
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[ext]",
+        },
+      },
     ],
   },
   resolve: {
@@ -55,9 +61,6 @@ const config: Configuration = {
       },
     }),
     new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      template: "../index.html",
-    }),
   ],
 };
 
