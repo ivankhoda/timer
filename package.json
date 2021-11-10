@@ -10,7 +10,8 @@
     "react-dom": "^17.0.2",
     "react-router": "^6.0.1",
     "react-router-dom": "^6.0.1",
-    "redux": "^4.1.1"
+    "redux": "^4.1.1",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -39,6 +40,7 @@
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
     "fork-ts-checker-webpack-plugin": "^6.3.4",
     "global-jsdom": "^8.2.0",
     "html-webpack-plugin": "^5.5.0",

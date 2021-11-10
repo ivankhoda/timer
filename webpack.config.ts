@@ -29,6 +29,13 @@ const config: Configuration = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.mp3$/,
+        loader: "file-loader",
+        options: {
+          name: "[path][name].[ext]",
+        },
+      },
     ],
   },
   resolve: {
@@ -54,9 +61,6 @@ const config: Configuration = {
       },
     }),
     new MiniCssExtractPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: "../index.html",
-    // }),
   ],
 };
 
