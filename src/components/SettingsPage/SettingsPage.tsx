@@ -1,6 +1,6 @@
 import React from "react";
 import { LinkButton } from "../SettingsButton/SettingsButton";
-
+import "./Settings.style.scss";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Discipline = {
   roundsQuantity: number;
@@ -17,10 +17,10 @@ export enum Disciplines {
 
 export const SettingsPage = () => {
   return (
-    <div>
+    <div className="settings">
       <h1>Settings</h1>
       <LinkButton linkTo="/" text="Go back" />
-      <select>
+      <select className="settings_element">
         Profile
         <option value="">Classic box</option>
         <option value="">MMA</option>
@@ -29,8 +29,8 @@ export const SettingsPage = () => {
         <option value="">Custom</option>
       </select>
 
-      <div className="incrementRounds-control">
-        <label>Количество раундов</label>
+      <div className="settings_element">
+        <label className="settings_title">Количество раундов</label>
         <p>3</p>
         <div className="incrementRounds-control_buttons">
           <button>+</button>
@@ -38,35 +38,35 @@ export const SettingsPage = () => {
         </div>
       </div>
 
-      <div>
-        <h3>Настройки времени раундов</h3>
-        <p>03.00</p>
+      <div className="settings_element">
+        <h5 className="settings_title">Настройки времени раундов</h5>
+        <input placeholder="3 минуты"></input>
       </div>
-      <div>
-        <h3>Настройки времени отдыха раундов</h3>
-        <p>01.00</p>
+      <div className="settings_element">
+        <h5 className="settings_title">Настройки времени отдыха раундов</h5>
+        <input placeholder="1 минута"></input>
       </div>
-      <div>
-        <h3>Сигнал до окончания раунда</h3>
-        <p>00.10</p>
+      <div className="settings_element">
+        <h5 className="settings_title">Сигнал до окончания раунда</h5>
+        <input placeholder="10 секунд"></input>
       </div>
-      <div>
-        <h3>Время для подготовки</h3>
-        <p>00.05</p>
+      <div className="settings_element">
+        <h5 className="settings_title">Время для подготовки</h5>
+        <input placeholder="5 секунд"></input>
       </div>
-      <div>
-        <h3>Сигнал окончания перерыва</h3>
-        <p>00.05</p>
+      <div className="settings_element">
+        <h5 className="settings_title">Сигнал окончания перерыва</h5>
+        <input placeholder="5 секунд"></input>
       </div>
-      <div>
-        <h3>Не затемнять экран</h3>
+      <div className="settings_element">
+        <h5 className="settings_title">Не затемнять экран</h5>
         <label className="switch">
           <input type="checkbox"></input>
           <span className="slider"></span>
         </label>
       </div>
-      <div>
-        <h3>Голосовое оповещение</h3>
+      <div className="settings_element">
+        <h5 className="settings_title">Голосовое оповещение</h5>
         <label className="switch">
           <input type="checkbox"></input>
           <span className="slider"></span>
