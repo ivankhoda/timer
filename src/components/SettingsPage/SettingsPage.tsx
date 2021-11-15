@@ -1,4 +1,6 @@
 import React from "react";
+import { store } from "../../store";
+import { numberToString } from "../../utils";
 import { LinkButton } from "../SettingsButton/SettingsButton";
 import "./Settings.style.scss";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,6 +18,11 @@ export enum Disciplines {
 }
 
 export const SettingsPage = () => {
+  const totalRounds = store.getState().setRounds;
+  const workTime = store.getState().setWorkingTime;
+  const restTime = store.getState().setRestingTime;
+
+  //const remindBefore = 10;
   return (
     <div className="settings">
       <h1>Settings</h1>
@@ -31,7 +38,7 @@ export const SettingsPage = () => {
 
       <div className="settings_element">
         <label className="settings_title">Количество раундов</label>
-        <p>3</p>
+        <p>{totalRounds}</p>
         <div className="incrementRounds-control_buttons">
           <button>+</button>
           <button>-</button>
@@ -40,11 +47,11 @@ export const SettingsPage = () => {
 
       <div className="settings_element">
         <h5 className="settings_title">Настройки времени раундов</h5>
-        <input placeholder="3 минуты"></input>
+        <input placeholder={numberToString(workTime)}></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Настройки времени отдыха раундов</h5>
-        <input placeholder="1 минута"></input>
+        <input placeholder={numberToString(restTime)}></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Сигнал до окончания раунда</h5>
