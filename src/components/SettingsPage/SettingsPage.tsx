@@ -29,10 +29,10 @@ export const SettingsPage = () => {
       <LinkButton linkTo="/" text="Go back" />
       <select className="settings_element">
         Profile
-        <option value="">Classic box</option>
-        <option value="">MMA</option>
-        <option value="">Amateur box</option>
-        <option value="">Professional box</option>
+        <option value="">{Disciplines.ClassicBoxing}</option>
+        <option value="">{Disciplines.MMA}</option>
+        <option value="">{Disciplines.ClassicBoxing}</option>
+        <option value="">{Disciplines.ProfessionalBoxing}</option>
         <option value="">Custom</option>
       </select>
 
@@ -47,23 +47,23 @@ export const SettingsPage = () => {
 
       <div className="settings_element">
         <h5 className="settings_title">Настройки времени раундов</h5>
-        <input placeholder={numberToString(workTime)}></input>
+        <input type="number" min="0" max="99" placeholder={numberToString(workTime)}></input>
       </div>
       <div className="settings_element">
-        <h5 className="settings_title">Настройки времени отдыха раундов</h5>
-        <input placeholder={numberToString(restTime)}></input>
+        <h5 className="settings_title">Настройки времени отдыха</h5>
+        <input type="number" min="0" max="180" placeholder={numberToString(restTime)}></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Сигнал до окончания раунда</h5>
-        <input placeholder="10 секунд"></input>
+        <input type="number" min="0" max="60" placeholder="10"></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Время для подготовки</h5>
-        <input placeholder="5 секунд"></input>
+        <input type="number" min="0" max="60" placeholder="5"></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Сигнал окончания перерыва</h5>
-        <input placeholder="5 секунд"></input>
+        <input type="number" min="0" max="60" placeholder="5"></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Не затемнять экран</h5>
