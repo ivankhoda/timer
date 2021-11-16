@@ -30,7 +30,6 @@ export const Timer = () => {
   const [play, { stop }] = useSound(start_sound);
   const [remind] = useSound(reminder_sound);
   const remindBefore = 10;
-  console.log(reminder_sound);
 
   const onIncrementButtonClicked = () => {
     store.getState().setRounds !== 99
