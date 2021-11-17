@@ -1,6 +1,7 @@
 import { DECREMENT_RESTING_TIME, INCREMENT_RESTING_TIME, RESET_TIMER, SET_RESTING_TIME } from "../actions/actions";
 const initialState = {
   basicRestingTime: 2,
+  oneMinute: 60,
 };
 
 export const setRestingTime = (state = initialState.basicRestingTime, action: { type: string; payload?: number }) => {

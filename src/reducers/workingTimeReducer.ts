@@ -2,6 +2,7 @@ import { DECREMENT_WORKING_TIME, INCREMENT_WORKING_TIME, RESET_TIMER, SET_WORKIN
 
 const initialState = {
   basicWorkingTime: 30,
+  threeMinutes: 180,
 };
 
 export const setWorkingTime = (state = initialState.basicWorkingTime, action: { type: string; payload?: number }) => {
