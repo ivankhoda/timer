@@ -8,7 +8,10 @@ const initialState = {
   basicReminderTime: 5,
 };
 
-export const setReminderTime = (state = initialState.basicReminderTime, action: { type: string; payload?: number }) => {
+export const setTimeForPrepare = (
+  state = initialState.basicReminderTime,
+  action: { type: string; payload?: number }
+) => {
   switch (action.type) {
     case INCREMENT_PREPARATION_TIME:
       return state + 1;

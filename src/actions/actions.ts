@@ -20,3 +20,6 @@ export const SET_PREPARATION_TIME = "set_preparation_time";
 export const INCREMENT_REST_END_TIME = "increment_rest_end_time";
 export const DECREMENT_REST_END_TIME = "decrement_rest_end_time";
 export const SET_REST_END_TIME = "set_rest_end_time";
+export const AMATEUR_BOXING = "amateurBoxing";
+export const MMA = "mma";
+export const PROFESSIONAL_BOXING = "professionalBoxing";

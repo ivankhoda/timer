@@ -12,7 +12,6 @@ import {
   incrementRounds,
   resetRounds,
   resetTimer,
-  set_rounds,
 } from "../../utils";
 import { ControlButton } from "../ControlButton/ControlButton";
 import { Rounds } from "../Rounds/Rounds";
@@ -29,7 +28,10 @@ export const Timer = () => {
   const currentRound = store.getState().setCurrentRound;
   const [play, { stop }] = useSound(start_sound);
   const [remind] = useSound(reminder_sound);
-  const remindBefore = 10;
+
+  const timeForRemindRoundEnd = store.getState().setRemindTime;
+  const timeForRemindRestEnd = store.getState().setReminderTimeForEndOfRest;
+  const timeForPrepare = store.getState().setTimeForPrepare;
 
   const onIncrementButtonClicked = () => {
     store.getState().setRounds !== 99
@@ -45,16 +47,16 @@ export const Timer = () => {
     value !== limit ? console.log("limit not reached yet") : console.log("limit reached");
   };
 
-  const onSetRounds = (e: React.FormEvent): void => {
-    e.preventDefault();
-    console.log(e);
-    const inputValue = (document.getElementById("inputRounds") as HTMLInputElement).value;
-    const payload = parseInt(inputValue);
+  // const onSetRounds = (e: React.FormEvent): void => {
+  //   e.preventDefault();
+  //   console.log(e);
+  //   const inputValue = (document.getElementById("inputRounds") as HTMLInputElement).value;
+  //   const payload = parseInt(inputValue);
 
-    store.getState().setRounds !== 1 || store.getState().setRounds !== 99
-      ? (store.dispatch(set_rounds(payload)), setRounds(store.getState().setRounds))
-      : console.log("something wrong");
-  };
+  //   store.getState().setRounds !== 1 || store.getState().setRounds !== 99
+  //     ? (store.dispatch(set_rounds(payload)), setRounds(store.getState().setRounds))
+  //     : console.log("something wrong");
+  // };
   store.subscribe(incrementRounds);
   store.subscribe(decrementRounds);
 
@@ -85,7 +87,7 @@ export const Timer = () => {
       const interval = setInterval(() => {
         store.dispatch(decrementWorkingTime(counter));
         setWorkingTime(store.getState().setWorkingTime);
-        if (counter === remindBefore) {
+        if (counter === timeForRemindRoundEnd) {
           remind();
         }
         counter--;
@@ -131,7 +133,6 @@ export const Timer = () => {
   //TODO add restart current round progress
 
   const reset = () => {
-    console.log("reser btn");
     store.dispatch(resetTimer());
     store.dispatch(resetRounds());
     setCurrentRound(store.getState().setCurrentRound);
