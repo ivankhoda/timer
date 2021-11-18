@@ -1,7 +1,7 @@
 import { DECREMENT_WORKING_TIME, INCREMENT_WORKING_TIME, RESET_TIMER, SET_WORKING_TIME } from "../actions/actions";
 
 const initialState = {
-  basicWorkingTime: 30,
+  basicWorkingTime: 180,
   threeMinutes: 180,
 };
 
