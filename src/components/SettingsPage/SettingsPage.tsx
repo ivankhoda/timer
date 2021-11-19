@@ -1,6 +1,6 @@
 import React from "react";
 import { store } from "../../store";
-import { numberToString, secondsToMinutes } from "../../utils";
+import { numberToString, secondsToWholeMinutes } from "../../utils";
 import { LinkButton } from "../SettingsButton/SettingsButton";
 import "./Settings.style.scss";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,12 +23,12 @@ export const SettingsPage = () => {
   const timeForRemindRoundEnd = store.getState().setRemindTime;
   const timeForRemindRestEnd = store.getState().setReminderTimeForEndOfRest;
   const timeForPrepare = store.getState().setTimeForPrepare;
-  const workingTimeToMinutes = secondsToMinutes(workTime);
-  console.log(workingTimeToMinutes);
+  const workingTimeToMinutes = secondsToWholeMinutes(workTime);
+
   //const remindBefore = 10;
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value, e.target, e.currentTarget.name);
-    console.log("chencged");
+    console.log(workingTimeToMinutes);
   };
   return (
     <div className="settings">
@@ -54,7 +54,7 @@ export const SettingsPage = () => {
         ></input>
       </div>
       <div className="settings_element">
-        <h5 className="settings_title">Настройки времени отдыха(мин)</h5>
+        <h5 className="settings_title">Настройки времени отдыха(сек)</h5>
         <input
           type="number"
           min="0"
@@ -71,7 +71,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          placeholder={numberToString(timeForRemindRoundEnd)}
+          defaultValue={timeForRemindRoundEnd}
           name="remindOfRoundsEnd"
           onChange={onChange}
         ></input>
@@ -82,7 +82,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          placeholder={numberToString(timeForPrepare)}
+          defaultValue={timeForPrepare}
           name="timeForFirstRoundPrepare"
           onChange={onChange}
         ></input>
@@ -93,7 +93,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          placeholder={numberToString(timeForRemindRestEnd)}
+          defaultValue={timeForRemindRestEnd}
           name="remindRestEnd"
           onChange={onChange}
         ></input>

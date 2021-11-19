@@ -1,6 +1,6 @@
 import { DECREMENT_REST_END_TIME, INCREMENT_REST_END_TIME, RESET_TIMER, SET_REST_END_TIME } from "../actions/actions";
 const initialState = {
-  basicReminderTime: 5,
+  basicReminderTime: 10,
 };
 
 export const setReminderTimeForEndOfRest = (

@@ -1,3 +1,3 @@
 export * from "./helpers";
 export * from "./numberToString";
-export * from "./secondsToMinutes";
+export * from "./timeConverter";
