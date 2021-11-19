@@ -8,6 +8,7 @@ interface IProps {
 export const TimeDisplay = (props: IProps) => {
   const { name, time } = props;
   const timeToMinutes = secondsToMinutes(time);
+
   return (
     <>
       <section data-testid="section" className="section">

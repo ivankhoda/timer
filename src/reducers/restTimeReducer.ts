@@ -1,7 +1,16 @@
-import { DECREMENT_RESTING_TIME, INCREMENT_RESTING_TIME, RESET_TIMER, SET_RESTING_TIME } from "../actions/actions";
+import {
+  AMATEUR_BOXING,
+  DECREMENT_RESTING_TIME,
+  INCREMENT_RESTING_TIME,
+  MMA,
+  PROFESSIONAL_BOXING,
+  RESET_TIMER,
+  SET_RESTING_TIME,
+} from "../actions/actions";
 const initialState = {
   basicRestingTime: 2,
   oneMinute: 60,
+  fiveMinutes: 300,
 };
 
 export const setRestingTime = (state = initialState.basicRestingTime, action: { type: string; payload?: number }) => {
@@ -12,6 +21,8 @@ export const setRestingTime = (state = initialState.basicRestingTime, action: { 
       return state > 0 ? state - 1 : state;
     case RESET_TIMER:
       return initialState.basicRestingTime;
+    case AMATEUR_BOXING || PROFESSIONAL_BOXING || MMA:
+      return initialState.oneMinute;
     case SET_RESTING_TIME:
       action.payload !== null || undefined ? action.payload : state;
     default:

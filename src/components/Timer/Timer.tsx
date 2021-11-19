@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from "react";
 import useSound from "use-sound";
-import reminder_sound from "../../sounds/reminder_sound.mp3";
+import reminder_sound from "../../sounds/remindKnock.mp3";
 import start_sound from "../../sounds/start_sound.mp3";
 import { store } from "../../store/store";
 import {
@@ -43,20 +43,7 @@ export const Timer = () => {
       ? (store.dispatch(decrementRounds()), setRounds(store.getState().setRounds))
       : console.log("Reached limit");
   };
-  const checkLimits = (value: number, limit: number) => {
-    value !== limit ? console.log("limit not reached yet") : console.log("limit reached");
-  };
 
-  // const onSetRounds = (e: React.FormEvent): void => {
-  //   e.preventDefault();
-  //   console.log(e);
-  //   const inputValue = (document.getElementById("inputRounds") as HTMLInputElement).value;
-  //   const payload = parseInt(inputValue);
-
-  //   store.getState().setRounds !== 1 || store.getState().setRounds !== 99
-  //     ? (store.dispatch(set_rounds(payload)), setRounds(store.getState().setRounds))
-  //     : console.log("something wrong");
-  // };
   store.subscribe(incrementRounds);
   store.subscribe(decrementRounds);
 
@@ -66,6 +53,7 @@ export const Timer = () => {
   const [round, setCurrentRound] = useState(currentRound);
   //TODO Make button text depend on state
   const [isActive, setIsActive] = useState(false);
+  const [prepare, setPrepare] = useState(false);
   const [pause, setPause] = useState<boolean | undefined>();
   const [start, setStart] = useState(false);
   const [rest, setRest] = useState(false);
@@ -92,6 +80,7 @@ export const Timer = () => {
         }
         counter--;
         if (counter < 0) {
+          play();
           setStart(false);
           setRest(true);
         }
@@ -108,6 +97,7 @@ export const Timer = () => {
         if (counter1 < 0) {
           updateTimer();
           setRest(false);
+
           console.log(currentRound, totalRounds);
           if (currentRound !== totalRounds) {
             startCycle();
@@ -133,6 +123,8 @@ export const Timer = () => {
   //TODO add restart current round progress
 
   const reset = () => {
+    setStart(false);
+    setRest(false);
     store.dispatch(resetTimer());
     store.dispatch(resetRounds());
     setCurrentRound(store.getState().setCurrentRound);
@@ -144,7 +136,7 @@ export const Timer = () => {
     <>
       <div data-testid="timer" className="timer">
         <Rounds currentRound={currentRound} totalRounds={totalRounds} />
-        <TimeDisplay name="work" time={workTime} />
+        <TimeDisplay name={prepare ? "Time for prepare" : "Work"} time={workTime} />
         <TimeDisplay name="rest" time={restTime} />
         <div data-testid="button-container" className="button-container">
           <ControlButton name="Start" onClick={startCycle} />

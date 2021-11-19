@@ -30,7 +30,7 @@ const config: Configuration = {
         ],
       },
       {
-        test: /\.mp3$/,
+        test: /\.(mp3|wav)$/i,
         loader: "file-loader",
         options: {
           name: "[path][name].[ext]",
