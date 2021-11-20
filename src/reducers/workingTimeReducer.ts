@@ -22,9 +22,14 @@ export const setWorkingTime = (state = initialState.basicWorkingTime, action: { 
       return state > 0 ? state - 1 : state;
     case RESET_TIMER:
       return initialState.basicWorkingTime;
-    case AMATEUR_BOXING || PROFESSIONAL_BOXING:
+    case AMATEUR_BOXING:
+      console.log("selected round time");
+      return initialState.threeMinutes;
+    case PROFESSIONAL_BOXING:
+      console.log("selected round time");
       return initialState.threeMinutes;
     case MMA:
+      console.log("selected round time");
       return initialState.fiveMinutes;
     case SET_WORKING_TIME:
       action.payload !== null || undefined ? action.payload : state;

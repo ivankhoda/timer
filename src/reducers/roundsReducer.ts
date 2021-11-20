@@ -20,13 +20,19 @@ export const setRounds = (state = initialState.totalRounds, action: { type: stri
     case DECREMENT_TOTAL_ROUNDS:
       return state - 1;
     case SET_ROUNDS:
+      console.log("selected rounds QTY");
       return action.payload;
     case AMATEUR_BOXING:
+      console.log("selected rounds QTY");
       return initialState.amateurBoxing;
-    case MMA:
-      return initialState.mma;
     case PROFESSIONAL_BOXING:
+      console.log("selected rounds QTY");
       return initialState.professionalBoxing;
+    case MMA:
+      console.log("selected rounds QTY");
+
+      return initialState.mma;
+
     default:
       return state;
   }

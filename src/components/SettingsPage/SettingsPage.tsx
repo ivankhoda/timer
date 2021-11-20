@@ -1,31 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
+import { AMATEUR_BOXING, MMA, PROFESSIONAL_BOXING } from "../../actions/actions";
 import { store } from "../../store";
-import { numberToString, secondsToWholeMinutes } from "../../utils";
+import { secondsToWholeMinutes, selectDiscipline } from "../../utils";
 import { LinkButton } from "../SettingsButton/SettingsButton";
 import "./Settings.style.scss";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Discipline = {
-  roundsQuantity: number;
-  roundWorkingTime: number;
-  disciplineRestTime: number;
-};
+
 export enum Disciplines {
-  MMA = "mma",
-  AmateurBoxing = "amateurBoxing",
-  ProfessionalBoxing = "professionalBoxing",
-  Custom = "custom",
+  MMA = "MMA",
+  AmateurBoxing = "Amateur boxing",
+  ProfessionalBoxing = "Professional boxing",
+  Custom = "Custom",
 }
 
 export const SettingsPage = () => {
-  // const totalRounds = store.getState().setRounds;
+  const totalRounds = store.getState().setRounds;
   const workTime = store.getState().setWorkingTime;
   const restTime = store.getState().setRestingTime;
   const timeForRemindRoundEnd = store.getState().setRemindTime;
   const timeForRemindRestEnd = store.getState().setReminderTimeForEndOfRest;
   const timeForPrepare = store.getState().setTimeForPrepare;
-  const workingTimeToMinutes = secondsToWholeMinutes(workTime);
 
-  //const remindBefore = 10;
+  const [rounds, setRounds] = useState(totalRounds);
+  const [roundTime, setRoundTime] = useState(workTime);
+  const [rest, setRest] = useState(restTime);
+  const [remindBeforeRoundEnd, setRemindBeforeRoundEnd] = useState(timeForRemindRoundEnd);
+  const [remindForRestEnd, setremindForRestEnd] = useState(timeForRemindRestEnd);
+  const [prepareTime, setPrepareTime] = useState(timeForPrepare);
+
+  const workingTimeToMinutes = secondsToWholeMinutes(roundTime);
+
+  const onSelect = (e: React.FormEvent<HTMLSelectElement>) => {
+    const discipline = e.currentTarget.value;
+
+    store.dispatch(selectDiscipline(discipline));
+    console.log(store.getState().setRounds);
+    console.log(totalRounds);
+    setRounds(store.getState().setRounds);
+    setRoundTime(roundTime);
+    setRest(rest);
+    setRemindBeforeRoundEnd(timeForRemindRoundEnd);
+    setremindForRestEnd(timeForRemindRestEnd);
+    setPrepareTime(timeForPrepare);
+  };
+
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value, e.target, e.currentTarget.name);
     console.log(workingTimeToMinutes);
@@ -34,13 +51,18 @@ export const SettingsPage = () => {
     <div className="settings">
       <h1>Settings</h1>
       <LinkButton linkTo="/" text="Go back" />
-      <select className="settings_element">
+      <select className="settings_element" onChange={onSelect}>
         Profile
-        <option value="">{Disciplines.MMA}</option>
-        <option value="">{Disciplines.AmateurBoxing}</option>
-        <option value="">{Disciplines.ProfessionalBoxing}</option>
         <option value="">Custom</option>
+        <option value={MMA}>{Disciplines.MMA}</option>
+        <option value={AMATEUR_BOXING}>{Disciplines.AmateurBoxing}</option>
+        <option value={PROFESSIONAL_BOXING}>{Disciplines.ProfessionalBoxing}</option>
       </select>
+
+      <div className="settings_element">
+        <h5 className="settings_title">Настройки количества раундов</h5>
+        <input type="number" min="0" max="99" name="roundsTime" onChange={onChange} defaultValue={rounds}></input>
+      </div>
 
       <div className="settings_element">
         <h5 className="settings_title">Настройки времени раундов(мин)</h5>
@@ -55,15 +77,7 @@ export const SettingsPage = () => {
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Настройки времени отдыха(сек)</h5>
-        <input
-          type="number"
-          min="0"
-          max="180"
-          placeholder={numberToString(restTime)}
-          name="restTime"
-          onChange={onChange}
-          defaultValue={restTime}
-        ></input>
+        <input type="number" min="0" max="180" name="restTime" onChange={onChange} defaultValue={rest}></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Сигнал до окончания раунда(сек)</h5>
@@ -71,7 +85,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          defaultValue={timeForRemindRoundEnd}
+          defaultValue={remindBeforeRoundEnd}
           name="remindOfRoundsEnd"
           onChange={onChange}
         ></input>
@@ -82,7 +96,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          defaultValue={timeForPrepare}
+          defaultValue={prepareTime}
           name="timeForFirstRoundPrepare"
           onChange={onChange}
         ></input>
@@ -93,7 +107,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          defaultValue={timeForRemindRestEnd}
+          defaultValue={remindForRestEnd}
           name="remindRestEnd"
           onChange={onChange}
         ></input>

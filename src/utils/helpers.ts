@@ -45,3 +45,7 @@ export const resetTimer = () => {
 export const resetRounds = () => {
   return { type: RESET_ROUNDS };
 };
+
+export const selectDiscipline = (discipline: string) => {
+  return { type: discipline };
+};

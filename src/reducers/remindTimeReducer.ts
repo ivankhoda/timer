@@ -2,6 +2,8 @@ import {
   AMATEUR_BOXING,
   DECREMENT_REMINDING_TIME,
   INCREMENT_REMINDING_TIME,
+  MMA,
+  PROFESSIONAL_BOXING,
   RESET_TIMER,
   SET_REMIND_TIME,
 } from "../actions/actions";
@@ -17,7 +19,14 @@ export const setReminderTime = (state = initialState.basicReminderTime, action: 
     case DECREMENT_REMINDING_TIME:
       return state > 0 ? state - 1 : state;
     case AMATEUR_BOXING:
+      console.log("selected remind time");
       return initialState.amateurBoxing;
+    case PROFESSIONAL_BOXING:
+      console.log("selected remind time");
+      return initialState.basicReminderTime;
+    case MMA:
+      console.log("selected remind time");
+      return initialState.basicReminderTime;
     case RESET_TIMER:
       return initialState.basicReminderTime;
     case SET_REMIND_TIME:

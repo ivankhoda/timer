@@ -21,8 +21,19 @@ export const setRestingTime = (state = initialState.basicRestingTime, action: { 
       return state > 0 ? state - 1 : state;
     case RESET_TIMER:
       return initialState.basicRestingTime;
-    case AMATEUR_BOXING || PROFESSIONAL_BOXING || MMA:
+    case AMATEUR_BOXING:
+      console.log("selected rest time");
+
       return initialState.oneMinute;
+    case PROFESSIONAL_BOXING:
+      console.log("selected rest time");
+
+      return initialState.oneMinute;
+    case MMA:
+      console.log("selected rest time");
+
+      return initialState.oneMinute;
+
     case SET_RESTING_TIME:
       action.payload !== null || undefined ? action.payload : state;
     default:
