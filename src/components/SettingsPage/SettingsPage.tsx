@@ -33,7 +33,7 @@ export const SettingsPage = () => {
     const discipline = e.currentTarget.value;
 
     store.dispatch(selectDiscipline(discipline));
-    console.log(store.getState().setRounds);
+    console.log(store.getState().setRounds, "new rounds");
     console.log(totalRounds);
     setRounds(store.getState().setRounds);
     setRoundTime(roundTime);
@@ -42,7 +42,7 @@ export const SettingsPage = () => {
     setremindForRestEnd(timeForRemindRestEnd);
     setPrepareTime(timeForPrepare);
   };
-
+  console.log(rounds);
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value, e.target, e.currentTarget.name);
     console.log(workingTimeToMinutes);

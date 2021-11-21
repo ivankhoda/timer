@@ -19,13 +19,10 @@ export const setReminderTime = (state = initialState.basicReminderTime, action: 
     case DECREMENT_REMINDING_TIME:
       return state > 0 ? state - 1 : state;
     case AMATEUR_BOXING:
-      console.log("selected remind time");
       return initialState.amateurBoxing;
     case PROFESSIONAL_BOXING:
-      console.log("selected remind time");
       return initialState.basicReminderTime;
     case MMA:
-      console.log("selected remind time");
       return initialState.basicReminderTime;
     case RESET_TIMER:
       return initialState.basicReminderTime;

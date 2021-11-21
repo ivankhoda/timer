@@ -22,13 +22,10 @@ export const setReminderTimeForEndOfRest = (
     case DECREMENT_REST_END_TIME:
       return state > 0 ? state - 1 : state;
     case AMATEUR_BOXING:
-      console.log("Remind time of end rest selected");
       return initialState.amateurBoxing;
     case PROFESSIONAL_BOXING:
-      console.log("Remind time of end rest selected");
       return initialState.basicReminderTime;
     case MMA:
-      console.log("Remind time of end rest selected");
       return initialState.basicReminderTime;
     case RESET_TIMER:
       return initialState.basicReminderTime;

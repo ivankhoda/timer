@@ -22,16 +22,10 @@ export const setRestingTime = (state = initialState.basicRestingTime, action: { 
     case RESET_TIMER:
       return initialState.basicRestingTime;
     case AMATEUR_BOXING:
-      console.log("selected rest time");
-
       return initialState.oneMinute;
     case PROFESSIONAL_BOXING:
-      console.log("selected rest time");
-
       return initialState.oneMinute;
     case MMA:
-      console.log("selected rest time");
-
       return initialState.oneMinute;
 
     case SET_RESTING_TIME:
