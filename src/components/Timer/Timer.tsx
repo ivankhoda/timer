@@ -51,7 +51,7 @@ export const Timer = () => {
   const [workingTime, setWorkingTime] = useState(workTime);
   const [restingTime, setRestTime] = useState(restTime);
   const [round, setCurrentRound] = useState(currentRound);
-  //TODO Make button text depend on state
+
   const [isActive, setIsActive] = useState(false);
   const [prepare, setPrepare] = useState(false);
   const [pause, setPause] = useState<boolean | undefined>();
@@ -109,7 +109,6 @@ export const Timer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentRound, pause, rest, restTime, restingTime, start, totalRounds, workTime, workingTime]);
 
-  // cycles logic
   const updateTimer = () => {
     store.dispatch(resetTimer());
 

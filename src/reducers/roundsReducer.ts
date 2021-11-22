@@ -23,10 +23,11 @@ export const setRounds = (state = initialState.totalRounds, action: { type: stri
       return action.payload;
     case AMATEUR_BOXING:
       return initialState.amateurBoxing;
-    case MMA:
-      return initialState.mma;
     case PROFESSIONAL_BOXING:
       return initialState.professionalBoxing;
+    case MMA:
+      return initialState.mma;
+
     default:
       return state;
   }
