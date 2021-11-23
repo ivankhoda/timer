@@ -30,7 +30,6 @@ export const setWorkingTime = (state = initialState.basicWorkingTime, action: { 
       return initialState.fiveMinutes;
     case SET_WORKING_TIME:
       action.payload !== null || undefined ? action.payload : state;
-
     default:
       return state;
   }

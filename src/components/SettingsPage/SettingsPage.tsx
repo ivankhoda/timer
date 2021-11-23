@@ -42,7 +42,7 @@ export const SettingsPage = () => {
     setremindForRestEnd(timeForRemindRestEnd);
     setPrepareTime(timeForPrepare);
   };
-  console.log(rounds);
+
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value, e.target, e.currentTarget.name);
     console.log(workingTimeToMinutes);
