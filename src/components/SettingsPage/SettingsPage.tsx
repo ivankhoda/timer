@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AMATEUR_BOXING, MMA, PROFESSIONAL_BOXING } from "../../actions/actions";
 import { store } from "../../store";
 import { secondsToWholeMinutes, selectDiscipline } from "../../utils";
+import { DisciplinesSelect } from "../DisciplinesSelect/DisciplineSelect";
 import { LinkButton } from "../SettingsButton/SettingsButton";
 import "./Settings.style.scss";
 
@@ -20,6 +21,8 @@ export const SettingsPage = () => {
   const timeForRemindRestEnd = store.getState().setReminderTimeForEndOfRest;
   const timeForPrepare = store.getState().setTimeForPrepare;
 
+  // const [discipline, setDiscipline] = useState("Custom");
+
   const [rounds, setRounds] = useState(totalRounds);
   const [roundTime, setRoundTime] = useState(workTime);
   const [rest, setRest] = useState(restTime);
@@ -31,21 +34,22 @@ export const SettingsPage = () => {
 
   const onSelect = (e: React.FormEvent<HTMLSelectElement>) => {
     const discipline = e.currentTarget.value;
-
     store.dispatch(selectDiscipline(discipline));
-    console.log(store.getState().setRounds, "new rounds");
-    console.log(totalRounds);
     setRounds(store.getState().setRounds);
-    setRoundTime(roundTime);
-    setRest(rest);
+    setRoundTime(store.getState().setWorkingTime);
+    setRest(store.getState().setRestingTime);
     setRemindBeforeRoundEnd(timeForRemindRoundEnd);
-    setremindForRestEnd(timeForRemindRestEnd);
-    setPrepareTime(timeForPrepare);
+    setremindForRestEnd(store.getState().setRemindTime);
+    setPrepareTime(store.getState().setTimeForPrepare);
   };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+    console.log(rounds, "before update");
     console.log(e.currentTarget.value, e.target, e.currentTarget.name);
     console.log(workingTimeToMinutes);
+    const val = parseInt(e.currentTarget.value);
+    setRounds(val);
+    console.log(rounds, "after update");
   };
   return (
     <div className="settings">
@@ -58,10 +62,14 @@ export const SettingsPage = () => {
         <option value={AMATEUR_BOXING}>{Disciplines.AmateurBoxing}</option>
         <option value={PROFESSIONAL_BOXING}>{Disciplines.ProfessionalBoxing}</option>
       </select>
-
+      <DisciplinesSelect
+        name="Profile"
+        options={[{ optionName: "Sport", optionValue: "Bigsport" }]}
+        onSelect={onSelect}
+      />
       <div className="settings_element">
         <h5 className="settings_title">Настройки количества раундов</h5>
-        <input type="number" min="0" max="99" name="roundsTime" onChange={onChange} defaultValue={rounds}></input>
+        <input type="number" min="0" max="99" name="roundsTime" onChange={onChange} value={rounds}></input>
       </div>
 
       <div className="settings_element">
@@ -72,12 +80,12 @@ export const SettingsPage = () => {
           max="99"
           name="roundsTime"
           onChange={onChange}
-          defaultValue={workingTimeToMinutes}
+          value={workingTimeToMinutes}
         ></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Настройки времени отдыха(сек)</h5>
-        <input type="number" min="0" max="180" name="restTime" onChange={onChange} defaultValue={rest}></input>
+        <input type="number" min="0" max="180" name="restTime" onChange={onChange} value={rest}></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Сигнал до окончания раунда(сек)</h5>
@@ -85,7 +93,7 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          defaultValue={remindBeforeRoundEnd}
+          value={remindBeforeRoundEnd}
           name="remindOfRoundsEnd"
           onChange={onChange}
         ></input>
@@ -96,21 +104,14 @@ export const SettingsPage = () => {
           type="number"
           min="0"
           max="60"
-          defaultValue={prepareTime}
+          value={prepareTime}
           name="timeForFirstRoundPrepare"
           onChange={onChange}
         ></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Сигнал до окончания перерыва(сек)</h5>
-        <input
-          type="number"
-          min="0"
-          max="60"
-          defaultValue={remindForRestEnd}
-          name="remindRestEnd"
-          onChange={onChange}
-        ></input>
+        <input type="number" min="0" max="60" value={remindForRestEnd} name="remindRestEnd" onChange={onChange}></input>
       </div>
       <div className="settings_element">
         <h5 className="settings_title">Не затемнять экран</h5>
