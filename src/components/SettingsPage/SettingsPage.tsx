@@ -4,6 +4,7 @@ import { store } from "../../store";
 import { secondsToWholeMinutes, selectDiscipline } from "../../utils";
 import { DisciplinesSelect } from "../DisciplinesSelect/DisciplineSelect";
 import { LinkButton } from "../SettingsButton/SettingsButton";
+import { SettingsElement } from "../SettingsElement/SettingElement";
 import "./Settings.style.scss";
 
 export enum Disciplines {
@@ -12,6 +13,12 @@ export enum Disciplines {
   ProfessionalBoxing = "Professional boxing",
   Custom = "Custom",
 }
+const disciplines = [
+  { optionName: Disciplines.Custom, optionValue: Disciplines.Custom },
+  { optionName: Disciplines.MMA, optionValue: MMA },
+  { optionName: Disciplines.AmateurBoxing, optionValue: AMATEUR_BOXING },
+  { optionName: Disciplines.ProfessionalBoxing, optionValue: PROFESSIONAL_BOXING },
+];
 
 export const SettingsPage = () => {
   const totalRounds = store.getState().setRounds;
@@ -20,8 +27,6 @@ export const SettingsPage = () => {
   const timeForRemindRoundEnd = store.getState().setRemindTime;
   const timeForRemindRestEnd = store.getState().setReminderTimeForEndOfRest;
   const timeForPrepare = store.getState().setTimeForPrepare;
-
-  // const [discipline, setDiscipline] = useState("Custom");
 
   const [rounds, setRounds] = useState(totalRounds);
   const [roundTime, setRoundTime] = useState(workTime);
@@ -43,90 +48,84 @@ export const SettingsPage = () => {
     setPrepareTime(store.getState().setTimeForPrepare);
   };
 
+  const onRoundsChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setRounds(value);
+  };
+  const onRoundTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setRoundTime(value);
+  };
+  const onRestTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setRoundTime(value);
+  };
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    console.log(rounds, "before update");
-    console.log(e.currentTarget.value, e.target, e.currentTarget.name);
-    console.log(workingTimeToMinutes);
-    const val = parseInt(e.currentTarget.value);
-    setRounds(val);
-    console.log(rounds, "after update");
+    const value = e.currentTarget;
+    console.log(value);
   };
   return (
     <div className="settings">
       <h1>Settings</h1>
       <LinkButton linkTo="/" text="Go back" />
-      <select className="settings_element" onChange={onSelect}>
-        Profile
-        <option value="">Custom</option>
-        <option value={MMA}>{Disciplines.MMA}</option>
-        <option value={AMATEUR_BOXING}>{Disciplines.AmateurBoxing}</option>
-        <option value={PROFESSIONAL_BOXING}>{Disciplines.ProfessionalBoxing}</option>
-      </select>
-      <DisciplinesSelect
-        name="Profile"
-        options={[{ optionName: "Sport", optionValue: "Bigsport" }]}
-        onSelect={onSelect}
-      />
-      <div className="settings_element">
-        <h5 className="settings_title">Настройки количества раундов</h5>
-        <input type="number" min="0" max="99" name="roundsTime" onChange={onChange} value={rounds}></input>
-      </div>
 
-      <div className="settings_element">
-        <h5 className="settings_title">Настройки времени раундов(мин)</h5>
-        <input
-          type="number"
-          min="0"
-          max="99"
-          name="roundsTime"
-          onChange={onChange}
-          value={workingTimeToMinutes}
-        ></input>
-      </div>
-      <div className="settings_element">
-        <h5 className="settings_title">Настройки времени отдыха(сек)</h5>
-        <input type="number" min="0" max="180" name="restTime" onChange={onChange} value={rest}></input>
-      </div>
-      <div className="settings_element">
-        <h5 className="settings_title">Сигнал до окончания раунда(сек)</h5>
-        <input
-          type="number"
-          min="0"
-          max="60"
-          value={remindBeforeRoundEnd}
-          name="remindOfRoundsEnd"
-          onChange={onChange}
-        ></input>
-      </div>
-      <div className="settings_element">
-        <h5 className="settings_title">Время для подготовки перед первым раундом(сек)</h5>
-        <input
-          type="number"
-          min="0"
-          max="60"
-          value={prepareTime}
-          name="timeForFirstRoundPrepare"
-          onChange={onChange}
-        ></input>
-      </div>
-      <div className="settings_element">
-        <h5 className="settings_title">Сигнал до окончания перерыва(сек)</h5>
-        <input type="number" min="0" max="60" value={remindForRestEnd} name="remindRestEnd" onChange={onChange}></input>
-      </div>
-      <div className="settings_element">
-        <h5 className="settings_title">Не затемнять экран</h5>
-        <label className="switch">
-          <input type="checkbox" name="doNotTurnOfScreen" onChange={onChange}></input>
-          <span className="slider"></span>
-        </label>
-      </div>
-      <div className="settings_element">
-        <h5 className="settings_title">Голосовое оповещение</h5>
-        <label className="switch">
-          <input type="checkbox" name="useVoiceToRemind" onChange={onChange}></input>
-          <span className="slider"></span>
-        </label>
-      </div>
+      <DisciplinesSelect name="Profile" options={disciplines} onSelect={onSelect} />
+      <SettingsElement
+        title="Настройки количества раундов"
+        type="number"
+        min="0"
+        max="99"
+        name={"roundsTime"}
+        onChange={onRoundsChange}
+        value={rounds}
+      />
+      <SettingsElement
+        title="Настройки времени раундов(мин)"
+        type="number"
+        min="0"
+        max="99"
+        name={"roundsTime"}
+        onChange={onRoundTimeChange}
+        value={workingTimeToMinutes}
+      />
+      <SettingsElement
+        title="Настройки времени отдыха(сек)"
+        type="number"
+        min="0"
+        max="180"
+        name={"restTime"}
+        onChange={onRestTimeChange}
+        value={rest}
+      />
+      <SettingsElement
+        title="Сигнал до окончания раунда(сек)"
+        type="number"
+        min="0"
+        max="60"
+        name={"remindOfRoundsEnd"}
+        onChange={onChange}
+        value={remindBeforeRoundEnd}
+      />
+      <SettingsElement
+        title="Время для подготовки перед первым раундом(сек)"
+        type="number"
+        min="0"
+        max="60"
+        name={"timeForFirstRoundPrepare"}
+        onChange={onChange}
+        value={prepareTime}
+      />
+      <SettingsElement
+        title="Сигнал до окончания перерыва(сек)"
+        type="number"
+        min="0"
+        max="60"
+        name={"remindRestEnd"}
+        onChange={onChange}
+        value={remindForRestEnd}
+      />
+      <SettingsElement title="Не затемнять экран" type="checkbox" name={"doNotTurnOfScreen"} onChange={onChange} />
+      <SettingsElement title="Голосовое оповещение" type="checkbox" name={"useVoiceToRemind"} onChange={onChange} />
     </div>
   );
 };
