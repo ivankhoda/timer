@@ -51,7 +51,6 @@ export const Timer = () => {
   const [workingTime, setWorkingTime] = useState(workTime);
   const [restingTime, setRestTime] = useState(restTime);
   const [round, setCurrentRound] = useState(currentRound);
-
   const [isActive, setIsActive] = useState(false);
   const [prepare, setPrepare] = useState(false);
   const [pause, setPause] = useState<boolean | undefined>();
@@ -85,7 +84,6 @@ export const Timer = () => {
           setRest(true);
         }
       }, 1000);
-
       return () => clearInterval(interval);
     }
     let counter1 = restTime - 1;
@@ -119,7 +117,6 @@ export const Timer = () => {
       setRestTime(store.getState().setRestingTime);
     }
   };
-  //TODO add restart current round progress
 
   const reset = () => {
     setStart(false);
