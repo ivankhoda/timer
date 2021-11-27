@@ -60,6 +60,19 @@ export const SettingsPage = () => {
     const value = parseInt(e.currentTarget.value);
     setRoundTime(value);
   };
+  const onRemindTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setRemindBeforeRoundEnd(value);
+  };
+  const onTimeForPrepareChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setPrepareTime(value);
+  };
+  const onTimeRemindRestEndChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = parseInt(e.currentTarget.value);
+    setremindForRestEnd(value);
+  };
+
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget;
     console.log(value);
@@ -103,7 +116,7 @@ export const SettingsPage = () => {
         min="0"
         max="60"
         name={"remindOfRoundsEnd"}
-        onChange={onChange}
+        onChange={onRemindTimeChange}
         value={remindBeforeRoundEnd}
       />
       <SettingsElement
@@ -112,7 +125,7 @@ export const SettingsPage = () => {
         min="0"
         max="60"
         name={"timeForFirstRoundPrepare"}
-        onChange={onChange}
+        onChange={onTimeForPrepareChange}
         value={prepareTime}
       />
       <SettingsElement
@@ -121,7 +134,7 @@ export const SettingsPage = () => {
         min="0"
         max="60"
         name={"remindRestEnd"}
-        onChange={onChange}
+        onChange={onTimeRemindRestEndChange}
         value={remindForRestEnd}
       />
       <SettingsElement title="Не затемнять экран" type="checkbox" name={"doNotTurnOfScreen"} onChange={onChange} />
