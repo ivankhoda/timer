@@ -127,7 +127,7 @@ export const Timer = () => {
     setWorkingTime(store.getState().setWorkingTime);
     setRestTime(store.getState().setRestingTime);
   };
-
+  //TODO change time in Time display
   return (
     <>
       <div data-testid="timer" className="timer">
