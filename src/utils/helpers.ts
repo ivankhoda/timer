@@ -10,6 +10,7 @@ import {
   RESET_ROUNDS,
   RESET_TIMER,
   SET_ROUNDS,
+  SET_WORKING_TIME,
 } from "../actions/actions";
 
 export const incrementRounds = () => {
@@ -20,6 +21,9 @@ export const decrementRounds = () => {
 };
 export const set_rounds = (payload: number) => {
   return { type: SET_ROUNDS, payload: payload };
+};
+export const setWorkTime = (payload: number) => {
+  return { type: SET_WORKING_TIME, payload: payload };
 };
 export const incrementWorkingTime = (payload: number) => {
   return { type: INCREMENT_WORKING_TIME, payload: payload };
@@ -48,4 +52,8 @@ export const resetRounds = () => {
 
 export const selectDiscipline = (discipline: string) => {
   return { type: discipline };
+};
+
+export const set_time = (payload: number) => {
+  return { type: SET_ROUNDS, payload: payload };
 };
