@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AMATEUR_BOXING, MMA, PROFESSIONAL_BOXING } from "../../actions/actions";
 import { store } from "../../store";
-import { minutesToSeconds, secondsToWholeMinutes, selectDiscipline, set_rounds } from "../../utils";
+import { minutesToSeconds, secondsToWholeMinutes, selectDiscipline, setWorkTime, set_rounds } from "../../utils";
 import { DisciplinesSelect } from "../DisciplinesSelect/DisciplineSelect";
 import { LinkButton } from "../SettingsButton/SettingsButton";
 import { SettingsElement } from "../SettingsElement/SettingElement";
@@ -28,20 +28,21 @@ export const SettingsPage = () => {
   const timeForRemindRestEnd = store.getState().setReminderTimeForEndOfRest;
   const timeForPrepare = store.getState().setTimeForPrepare;
 
+  const workingTimeToMinutes = secondsToWholeMinutes(workTime);
+  console.log(workingTimeToMinutes);
+
   const [rounds, setRounds] = useState(totalRounds);
-  const [roundTime, setRoundTime] = useState(workTime);
+  const [roundTime, setRoundTime] = useState(workingTimeToMinutes);
   const [rest, setRest] = useState(restTime);
   const [remindBeforeRoundEnd, setRemindBeforeRoundEnd] = useState(timeForRemindRoundEnd);
   const [remindForRestEnd, setremindForRestEnd] = useState(timeForRemindRestEnd);
   const [prepareTime, setPrepareTime] = useState(timeForPrepare);
 
-  const workingTimeToMinutes = secondsToWholeMinutes(roundTime);
-
   const onSelect = (e: React.FormEvent<HTMLSelectElement>) => {
     const discipline = e.currentTarget.value;
     store.dispatch(selectDiscipline(discipline));
     setRounds(store.getState().setRounds);
-    setRoundTime(store.getState().setWorkingTime);
+    setRoundTime(secondsToWholeMinutes(store.getState().setWorkingTime));
     setRest(store.getState().setRestingTime);
     setRemindBeforeRoundEnd(timeForRemindRoundEnd);
     setremindForRestEnd(store.getState().setRemindTime);
@@ -50,20 +51,21 @@ export const SettingsPage = () => {
 
   const onRoundsChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
+
     store.dispatch(set_rounds(value));
     setRounds(value);
   };
   const onRoundTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
-    console.log(value);
-    const minutes = minutesToSeconds(value);
-    console.log(minutes);
-    //store.dispatch(setWorkTime(minutes));
+
+    const seconds = minutesToSeconds(value);
+    store.dispatch(setWorkTime(seconds));
+
     setRoundTime(value);
   };
   const onRestTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
-    setRoundTime(value);
+    setRest(value);
   };
   const onRemindTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
@@ -80,7 +82,7 @@ export const SettingsPage = () => {
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = e.currentTarget;
-    console.log(value);
+    console.log(value, "onChange value");
   };
   return (
     <div className="settings">
@@ -93,7 +95,7 @@ export const SettingsPage = () => {
         type="number"
         min="0"
         max="99"
-        name={"roundsTime"}
+        name={"rounds"}
         onChange={onRoundsChange}
         value={rounds}
       />
@@ -104,7 +106,7 @@ export const SettingsPage = () => {
         max="99"
         name={"roundsTime"}
         onChange={onRoundTimeChange}
-        value={workingTimeToMinutes}
+        value={roundTime}
       />
       <SettingsElement
         title="Настройки времени отдыха(сек)"

@@ -9,7 +9,8 @@ import {
 } from "../actions/actions";
 
 const initialState = {
-  basicWorkingTime: 13,
+  basicWorkingTime: 60,
+  oneMinute: 60,
   threeMinutes: 180,
   fiveMinutes: 300,
 };

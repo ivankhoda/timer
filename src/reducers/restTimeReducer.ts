@@ -8,7 +8,7 @@ import {
   SET_RESTING_TIME,
 } from "../actions/actions";
 const initialState = {
-  basicRestingTime: 2,
+  basicRestingTime: 15,
   oneMinute: 60,
   fiveMinutes: 300,
 };
