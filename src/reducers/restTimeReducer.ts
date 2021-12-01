@@ -27,9 +27,8 @@ export const setRestingTime = (state = initialState.basicRestingTime, action: { 
       return initialState.oneMinute;
     case MMA:
       return initialState.oneMinute;
-
     case SET_RESTING_TIME:
-      action.payload !== null || undefined ? action.payload : state;
+      action.payload !== (null || undefined) ? (state = action.payload) : state;
     default:
       return state;
   }

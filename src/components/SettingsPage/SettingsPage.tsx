@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { AMATEUR_BOXING, MMA, PROFESSIONAL_BOXING } from "../../actions/actions";
 import { store } from "../../store";
-import { minutesToSeconds, secondsToWholeMinutes, selectDiscipline, setWorkTime, set_rounds } from "../../utils";
+import {
+  minutesToSeconds,
+  secondsToWholeMinutes,
+  selectDiscipline,
+  setRestTime,
+  setWorkTime,
+  set_rounds,
+} from "../../utils";
 import { DisciplinesSelect } from "../DisciplinesSelect/DisciplineSelect";
 import { LinkButton } from "../SettingsButton/SettingsButton";
 import { SettingsElement } from "../SettingsElement/SettingElement";
@@ -29,7 +36,7 @@ export const SettingsPage = () => {
   const timeForPrepare = store.getState().setTimeForPrepare;
 
   const workingTimeToMinutes = secondsToWholeMinutes(workTime);
-  console.log(workingTimeToMinutes);
+  console.log(store.getState().setWorkingTime, "working time");
 
   const [rounds, setRounds] = useState(totalRounds);
   const [roundTime, setRoundTime] = useState(workingTimeToMinutes);
@@ -65,6 +72,7 @@ export const SettingsPage = () => {
   };
   const onRestTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
+    store.dispatch(setRestTime(value));
     setRest(value);
   };
   const onRemindTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
