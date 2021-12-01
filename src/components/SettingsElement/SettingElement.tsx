@@ -6,7 +6,7 @@ type Options = {
   min?: string;
   max?: string;
   name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string | number | undefined;
 };
 

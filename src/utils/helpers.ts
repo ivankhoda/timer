@@ -9,6 +9,7 @@ import {
   INCREMENT_WORKING_TIME,
   RESET_ROUNDS,
   RESET_TIMER,
+  SET_RESTING_TIME,
   SET_ROUNDS,
   SET_WORKING_TIME,
 } from "../actions/actions";
@@ -30,6 +31,9 @@ export const incrementWorkingTime = (payload: number) => {
 };
 export const decrementWorkingTime = (payload: number) => {
   return { type: DECREMENT_WORKING_TIME, payload: payload };
+};
+export const setRestTime = (payload: number) => {
+  return { type: SET_RESTING_TIME, payload: payload };
 };
 export const incrementRestingTime = (payload: number) => {
   return { type: INCREMENT_RESTING_TIME, payload: payload };

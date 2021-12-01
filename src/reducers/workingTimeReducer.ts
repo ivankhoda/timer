@@ -9,7 +9,8 @@ import {
 } from "../actions/actions";
 
 const initialState = {
-  basicWorkingTime: 13,
+  basicWorkingTime: 60,
+  oneMinute: 60,
   threeMinutes: 180,
   fiveMinutes: 300,
 };
@@ -29,8 +30,7 @@ export const setWorkingTime = (state = initialState.basicWorkingTime, action: { 
     case MMA:
       return initialState.fiveMinutes;
     case SET_WORKING_TIME:
-      console.log(action.payload);
-      action.payload !== null || undefined ? action.payload : state;
+      action.payload !== (null || undefined) ? (state = action.payload) : state;
     default:
       return state;
   }

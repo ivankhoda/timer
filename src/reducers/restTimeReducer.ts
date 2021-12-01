@@ -8,7 +8,7 @@ import {
   SET_RESTING_TIME,
 } from "../actions/actions";
 const initialState = {
-  basicRestingTime: 2,
+  basicRestingTime: 15,
   oneMinute: 60,
   fiveMinutes: 300,
 };
@@ -27,9 +27,8 @@ export const setRestingTime = (state = initialState.basicRestingTime, action: { 
       return initialState.oneMinute;
     case MMA:
       return initialState.oneMinute;
-
     case SET_RESTING_TIME:
-      action.payload !== null || undefined ? action.payload : state;
+      action.payload !== (null || undefined) ? (state = action.payload) : state;
     default:
       return state;
   }
