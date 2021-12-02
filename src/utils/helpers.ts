@@ -11,6 +11,7 @@ import {
   INCREMENT_WORKING_TIME,
   RESET_ROUNDS,
   RESET_TIMER,
+  SET_PREPARATION_TIME,
   SET_REMIND_TIME,
   SET_RESTING_TIME,
   SET_ROUNDS,
@@ -72,4 +73,7 @@ export const decrementRemindtime = (payload: number) => {
 };
 export const setRemindTime = (payload: number) => {
   return { type: SET_REMIND_TIME, payload: payload };
+};
+export const setPreparationTime = (payload: number) => {
+  return { type: SET_PREPARATION_TIME, payload: payload };
 };
