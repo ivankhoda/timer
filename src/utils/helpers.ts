@@ -1,14 +1,17 @@
 import {
   DECREMENT_CURRENT_ROUND,
+  DECREMENT_REMINDING_TIME,
   DECREMENT_RESTING_TIME,
   DECREMENT_TOTAL_ROUNDS,
   DECREMENT_WORKING_TIME,
   INCREMENT_CURRENT_ROUND,
+  INCREMENT_REMINDING_TIME,
   INCREMENT_RESTING_TIME,
   INCREMENT_TOTAL_ROUNDS,
   INCREMENT_WORKING_TIME,
   RESET_ROUNDS,
   RESET_TIMER,
+  SET_REMIND_TIME,
   SET_RESTING_TIME,
   SET_ROUNDS,
   SET_WORKING_TIME,
@@ -60,4 +63,13 @@ export const selectDiscipline = (discipline: string) => {
 
 export const set_time = (payload: number) => {
   return { type: SET_ROUNDS, payload: payload };
+};
+export const incrementRemindtime = (payload: number) => {
+  return { type: INCREMENT_REMINDING_TIME, payload: payload };
+};
+export const decrementRemindtime = (payload: number) => {
+  return { type: DECREMENT_REMINDING_TIME, payload: payload };
+};
+export const setRemindTime = (payload: number) => {
+  return { type: SET_REMIND_TIME, payload: payload };
 };
