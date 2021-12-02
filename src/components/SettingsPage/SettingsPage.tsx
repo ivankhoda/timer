@@ -5,6 +5,8 @@ import {
   minutesToSeconds,
   secondsToWholeMinutes,
   selectDiscipline,
+  setPreparationTime,
+  setRemindTime,
   setRestTime,
   setWorkTime,
   set_rounds,
@@ -36,7 +38,6 @@ export const SettingsPage = () => {
   const timeForPrepare = store.getState().setTimeForPrepare;
 
   const workingTimeToMinutes = secondsToWholeMinutes(workTime);
-  console.log(store.getState().setWorkingTime, "working time");
 
   const [rounds, setRounds] = useState(totalRounds);
   const [roundTime, setRoundTime] = useState(workingTimeToMinutes);
@@ -67,7 +68,6 @@ export const SettingsPage = () => {
 
     const seconds = minutesToSeconds(value);
     store.dispatch(setWorkTime(seconds));
-
     setRoundTime(value);
   };
   const onRestTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -77,10 +77,13 @@ export const SettingsPage = () => {
   };
   const onRemindTimeChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
-    setRemindBeforeRoundEnd(value);
+    store.dispatch(setRemindTime(value));
+    setRemindBeforeRoundEnd(store.getState().setRemindTime);
   };
+
   const onTimeForPrepareChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
+    store.dispatch(setPreparationTime(value));
     setPrepareTime(value);
   };
   const onTimeRemindRestEndChange = (e: React.FormEvent<HTMLInputElement>) => {

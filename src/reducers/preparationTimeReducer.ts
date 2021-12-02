@@ -29,7 +29,7 @@ export const setTimeForPrepare = (
     case RESET_TIMER:
       return initialState.basicReminderTime;
     case SET_PREPARATION_TIME:
-      action.payload !== null || undefined ? action.payload : state;
+      action.payload !== (null || undefined) ? (state = action.payload) : state;
     default:
       return state;
   }
