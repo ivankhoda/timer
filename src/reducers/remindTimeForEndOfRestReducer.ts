@@ -30,7 +30,7 @@ export const setReminderTimeForEndOfRest = (
     case RESET_TIMER:
       return initialState.basicReminderTime;
     case SET_REST_END_TIME:
-      action.payload !== null || undefined ? action.payload : state;
+      action.payload !== (null || undefined) ? (state = action.payload) : state;
     default:
       return state;
   }

@@ -8,6 +8,7 @@ import {
   setPreparationTime,
   setRemindTime,
   setRestTime,
+  setTimeRemindRestEnd,
   setWorkTime,
   set_rounds,
 } from "../../utils";
@@ -53,7 +54,7 @@ export const SettingsPage = () => {
     setRoundTime(secondsToWholeMinutes(store.getState().setWorkingTime));
     setRest(store.getState().setRestingTime);
     setRemindBeforeRoundEnd(timeForRemindRoundEnd);
-    setremindForRestEnd(store.getState().setRemindTime);
+    setremindForRestEnd(store.getState().setReminderTimeForEndOfRest);
     setPrepareTime(store.getState().setTimeForPrepare);
   };
 
@@ -88,7 +89,8 @@ export const SettingsPage = () => {
   };
   const onTimeRemindRestEndChange = (e: React.FormEvent<HTMLInputElement>) => {
     const value = parseInt(e.currentTarget.value);
-    setremindForRestEnd(value);
+    store.dispatch(setTimeRemindRestEnd(value));
+    setremindForRestEnd(store.getState().setReminderTimeForEndOfRest);
   };
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
