@@ -1,0 +1,41 @@
+@import "./media_mixin.scss";
+
+$background-color: #edf1ff;
+$body-color: #282d3c;
+.root,
+.settings {
+  width: 100%;
+  height: 100%;
+  border: solid #2248b9;
+  @include _480 {
+    background-color: purple;
+  }
+  @include small {
+    background-color: #2d51be;
+  }
+}
+.timer,
+.wrapper {
+  padding: 5px;
+  @include small {
+    background-color: maroon;
+  }
+}
+.body {
+  @include small {
+    background-color: #282d3c;
+  }
+}
+
+//html,
+// body {
+//   width: 100%;
+//   color: $body-color;
+//   background-color: $background-color;
+//   display: flex;
+
+//   justify-content: center;
+//   align-items: center;
+//   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+//     Helvetica Neue, sans-serif;
+// }
