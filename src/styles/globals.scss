@@ -1,4 +1,4 @@
-@import "./media_mixin.scss";
+@import "./mixin";
 
 $background-color: #edf1ff;
 $body-color: #282d3c;
@@ -10,9 +10,6 @@ $body-color: #282d3c;
   @include _480 {
     background-color: purple;
   }
-  @include small {
-    background-color: #2d51be;
-  }
 }
 .timer,
 .wrapper {
@@ -22,20 +19,20 @@ $body-color: #282d3c;
   }
 }
 .body {
-  @include small {
-    background-color: #282d3c;
+  @include test {
+    background-color: #2248b9;
   }
 }
 
-//html,
-// body {
-//   width: 100%;
-//   color: $body-color;
-//   background-color: $background-color;
-//   display: flex;
+html,
+body {
+  width: 100%;
+  color: $body-color;
+  background-color: $background-color;
+  display: flex;
 
-//   justify-content: center;
-//   align-items: center;
-//   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-//     Helvetica Neue, sans-serif;
-// }
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+}
