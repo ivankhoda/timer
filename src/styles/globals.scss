@@ -1,18 +1,29 @@
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-$body-color: #282d3c;
+@import "./mixin";
+
 $background-color: #edf1ff;
-.root {
+$body-color: #282d3c;
+.root,
+.settings {
   width: 100%;
   height: 100%;
-  border: solid #282d3c;
+  border: solid #2248b9;
+  @include _480 {
+    background-color: purple;
+  }
 }
+.timer,
 .wrapper {
   padding: 5px;
+  @include small {
+    background-color: maroon;
+  }
 }
+.body {
+  @include test {
+    background-color: #2248b9;
+  }
+}
+
 html,
 body {
   width: 100%;

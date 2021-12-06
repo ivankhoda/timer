@@ -14,6 +14,7 @@ import {
   SET_PREPARATION_TIME,
   SET_REMIND_TIME,
   SET_RESTING_TIME,
+  SET_REST_END_TIME,
   SET_ROUNDS,
   SET_WORKING_TIME,
 } from "../actions/actions";
@@ -76,4 +77,7 @@ export const setRemindTime = (payload: number) => {
 };
 export const setPreparationTime = (payload: number) => {
   return { type: SET_PREPARATION_TIME, payload: payload };
+};
+export const setTimeRemindRestEnd = (payload: number) => {
+  return { type: SET_REST_END_TIME, payload: payload };
 };

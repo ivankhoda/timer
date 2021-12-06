@@ -1,0 +1,41 @@
+// Using
+//.div {
+//   @include _1170 {
+//       @content;
+//   }
+//}
+@mixin large {
+  @media screen and (max-width: 1170px) {
+    @content;
+  }
+}
+@mixin _979 {
+  @media screen and (max-width: 979px) {
+    @content;
+  }
+}
+@mixin _768 {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+@mixin _600 {
+  @media screen and (max-width: 600px) {
+    @content;
+  }
+}
+@mixin _480 {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+@mixin small {
+  @media screen and (max-width: 375px) {
+    @content;
+  }
+}
+@mixin test {
+  @media (max-width: 375px) {
+    @content;
+  }
+}

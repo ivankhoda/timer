@@ -21,6 +21,7 @@ const config: Configuration = {
       {
         test: /\.s[ac]ss$/i,
         use: [
+          // { options: { outputPath: "css/", name: "[name].min.css" } },
           // Creates `style` nodes from JS strings
           "style-loader",
           // Translates CSS into CommonJS
@@ -43,7 +44,7 @@ const config: Configuration = {
   },
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     publicPath: "/",
   },
   devServer: {
