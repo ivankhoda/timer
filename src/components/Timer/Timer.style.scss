@@ -1,8 +1,15 @@
-.timer .button-container {
+@import "../../styles/mixin";
+.timer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+.button-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
 }
 .section {
   display: flex;
@@ -16,6 +23,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  font-size: 32px;
 }
 .increment-control {
   display: flex;
@@ -29,12 +37,17 @@
 button {
   border-radius: var(--RADIUS-MEDUIM);
   border: solid black;
-  padding: var(--SPACE-SMALL);
-  margin: 5px;
+  padding: var(--SPACE-LARGE);
+  font-size: 24px;
+  margin: 10px auto;
   background-color: var(--BACKGROUND-COLOR);
+  @include _320 {
+    font-size: 20px;
+  }
 }
-.start-button {
-  
+.start-button,
+.cancel-button,
+.settings-button {
 }
 .cancel-button {
 }
@@ -53,6 +66,8 @@ button {
 }
 .incrementRounds-control_buttons {
   width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
 }
