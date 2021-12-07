@@ -1,10 +1,11 @@
+@import "../../styles/mixin";
 .settings {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   align-content: center;
-  margin: auto;
+  width: 100%;
 }
 .settings_element {
   display: flex;
@@ -13,8 +14,34 @@
   justify-content: center;
   align-content: center;
   margin-top: 10px;
+  @include _375 {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 32px;
+  }
+  @include _320 {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 24px;
+  }
+}
+input {
+  min-width: 32px;
+  min-height: 32px;
+  font-size: 32px;
+  @include _320 {
+    min-width: 28px;
+    min-height: 28px;
+    font-size: 28px;
+  }
 }
 .settings_title {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin: 0;
+}
+.settings-button {
+  margin-top: 20px;
+  margin: auto;
 }

@@ -4,7 +4,7 @@
 //       @content;
 //   }
 //}
-@mixin large {
+@mixin _1170 {
   @media screen and (max-width: 1170px) {
     @content;
   }
@@ -29,13 +29,13 @@
     @content;
   }
 }
-@mixin small {
+@mixin _375 {
   @media screen and (max-width: 375px) {
     @content;
   }
 }
-@mixin test {
-  @media (min-width: 375px) {
+@mixin _320 {
+  @media screen and (max-width: 320px) {
     @content;
   }
 }

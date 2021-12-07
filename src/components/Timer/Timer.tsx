@@ -132,12 +132,12 @@ export const Timer = () => {
     <>
       <div data-testid="timer" className="timer">
         <Rounds currentRound={currentRound} totalRounds={totalRounds} />
-        <TimeDisplay name={prepare ? "Time for prepare" : "Work"} time={workTime} />
-        <TimeDisplay name="rest" time={restTime} />
+        <TimeDisplay name={prepare ? "Time for prepare" : "Работа"} time={workTime} />
+        <TimeDisplay name="Отдых" time={restTime} />
         <div data-testid="button-container" className="button-container">
-          <ControlButton name="Start" onClick={startCycle} />
-          <ControlButton name="Reset" onClick={reset} />
-          <ControlButton name="Pause" onClick={makePause} />
+          <ControlButton name="Старт" onClick={startCycle} />
+          <ControlButton name="Сброс" onClick={reset} />
+          <ControlButton name="Пауза" onClick={makePause} />
         </div>
 
         <div className="incrementRounds-control">
@@ -147,7 +147,7 @@ export const Timer = () => {
             <button onClick={onDecrementButtonClicked}>-</button>
           </div>
         </div>
-        <LinkButton linkTo="settings" text="Settings" />
+        <LinkButton linkTo="settings" text="Настройки" />
       </div>
     </>
   );

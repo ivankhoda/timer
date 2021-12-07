@@ -99,8 +99,8 @@ export const SettingsPage = () => {
   };
   return (
     <div className="settings">
-      <h1>Settings</h1>
-      <LinkButton linkTo="/" text="Go back" />
+      <h1>Настройки</h1>
+      <LinkButton linkTo="/" text="Назад" />
 
       <DisciplinesSelect name="Profile" options={disciplines} onSelect={onSelect} />
       <SettingsElement
