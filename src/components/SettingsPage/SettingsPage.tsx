@@ -1,3 +1,4 @@
+import NoSleep from "nosleep.js";
 import React, { useState } from "react";
 import { AMATEUR_BOXING, MMA, PROFESSIONAL_BOXING } from "../../actions/actions";
 import { store } from "../../store";
@@ -46,6 +47,8 @@ export const SettingsPage = () => {
   const [remindBeforeRoundEnd, setRemindBeforeRoundEnd] = useState(timeForRemindRoundEnd);
   const [remindForRestEnd, setremindForRestEnd] = useState(timeForRemindRestEnd);
   const [prepareTime, setPrepareTime] = useState(timeForPrepare);
+
+  const noSleep = new NoSleep();
 
   const onSelect = (e: React.FormEvent<HTMLSelectElement>) => {
     const discipline = e.currentTarget.value;
@@ -97,6 +100,10 @@ export const SettingsPage = () => {
     const value = e.currentTarget;
     console.log(value, "onChange value");
   };
+  const onNoSleep = () => {
+    noSleep.enable();
+  };
+
   return (
     <div className="settings">
       <h1>Настройки</h1>
@@ -157,8 +164,8 @@ export const SettingsPage = () => {
         onChange={onTimeRemindRestEndChange}
         value={remindForRestEnd}
       />
-      <SettingsElement title="Не затемнять экран" type="checkbox" name={"doNotTurnOfScreen"} onChange={onChange} />
-      <SettingsElement title="Голосовое оповещение" type="checkbox" name={"useVoiceToRemind"} onChange={onChange} />
+      {/* <SettingsElement title="Не затемнять экран" type="checkbox" name={"doNotTurnOfScreen"} onChange={onNoSleep} />
+      <SettingsElement title="Голосовое оповещение" type="checkbox" name={"useVoiceToRemind"} onChange={onChange} /> */}
     </div>
   );
 };

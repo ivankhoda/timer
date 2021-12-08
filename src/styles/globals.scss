@@ -14,8 +14,12 @@ $body-color: #282d3c;
 .timer,
 .wrapper {
   padding: 5px;
+  @include _375 {
+    padding: 0;
+  }
 }
 .body {
+  margin: 0;
 }
 a {
   text-decoration: none;
