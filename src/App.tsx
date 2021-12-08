@@ -14,6 +14,7 @@ export const App = (props: any) => {
     { path: "/", name: "Timer", Component: <Timer /> },
     { path: "/settings", name: "Settings", Component: <SettingsPage /> },
   ];
+
   return (
     <HashRouter>
       <Routes>
