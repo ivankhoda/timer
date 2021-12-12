@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
 import { Configuration } from "webpack";
-
+const isProduction = process.env.NODE_ENV === "production";
 const config: Configuration = {
   entry: "./src/index.tsx",
 
@@ -46,9 +46,8 @@ const config: Configuration = {
     extensions: [".tsx", ".ts", ".js", ".css", ".scss"],
   },
   output: {
-    path: path.resolve(__dirname, "build"),
+    publicPath: isProduction ? "/timer/" : "/",
     filename: "[name].js",
-    publicPath: "/",
   },
   devServer: {
     static: path.join(__dirname, "build"),
