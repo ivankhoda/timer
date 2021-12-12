@@ -1,4 +1,3 @@
-import NoSleep from "nosleep.js";
 import React, { useState } from "react";
 import { AMATEUR_BOXING, MMA, PROFESSIONAL_BOXING } from "../../actions/actions";
 import { store } from "../../store";
@@ -48,7 +47,7 @@ export const SettingsPage = () => {
   const [remindForRestEnd, setremindForRestEnd] = useState(timeForRemindRestEnd);
   const [prepareTime, setPrepareTime] = useState(timeForPrepare);
 
-  const noSleep = new NoSleep();
+  //const noSleep = new NoSleep();
 
   const onSelect = (e: React.FormEvent<HTMLSelectElement>) => {
     const discipline = e.currentTarget.value;
@@ -96,13 +95,13 @@ export const SettingsPage = () => {
     setremindForRestEnd(store.getState().setReminderTimeForEndOfRest);
   };
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const value = e.currentTarget;
-    console.log(value, "onChange value");
-  };
-  const onNoSleep = () => {
-    noSleep.enable();
-  };
+  // const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+  //   const value = e.currentTarget;
+  //   console.log(value, "onChange value");
+  // };
+  // const onNoSleep = () => {
+  //   noSleep.enable();
+  // };
 
   return (
     <div className="settings">
