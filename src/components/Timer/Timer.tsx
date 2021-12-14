@@ -19,7 +19,6 @@ import { LinkButton } from "../SettingsButton/SettingsButton";
 import { TimeDisplay } from "../TimeDisplay/TimeDisplay";
 import "./Timer.style.scss";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Timer = () => {
   const totalRounds = store.getState().setRounds;
@@ -127,7 +126,7 @@ export const Timer = () => {
     setWorkingTime(store.getState().setWorkingTime);
     setRestTime(store.getState().setRestingTime);
   };
-  //TODO change time in Time display
+
   return (
     <>
       <div data-testid="timer" className="timer">
