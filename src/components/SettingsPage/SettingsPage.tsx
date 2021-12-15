@@ -47,8 +47,6 @@ export const SettingsPage = () => {
   const [remindForRestEnd, setremindForRestEnd] = useState(timeForRemindRestEnd);
   const [prepareTime, setPrepareTime] = useState(timeForPrepare);
 
-  //const noSleep = new NoSleep();
-
   const onSelect = (e: React.FormEvent<HTMLSelectElement>) => {
     const discipline = e.currentTarget.value;
     store.dispatch(selectDiscipline(discipline));
@@ -94,14 +92,6 @@ export const SettingsPage = () => {
     store.dispatch(setTimeRemindRestEnd(value));
     setremindForRestEnd(store.getState().setReminderTimeForEndOfRest);
   };
-
-  // const onChange = (e: React.FormEvent<HTMLInputElement>) => {
-  //   const value = e.currentTarget;
-  //   console.log(value, "onChange value");
-  // };
-  // const onNoSleep = () => {
-  //   noSleep.enable();
-  // };
 
   return (
     <div className="settings">
