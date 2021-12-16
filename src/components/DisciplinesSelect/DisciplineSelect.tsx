@@ -9,7 +9,7 @@ type Options = {
 export const DisciplinesSelect = (props: Options) => {
   return (
     <select className="settings_element" onChange={props.onSelect}>
-      Settings
+      {props.name}
       {props.options.map((elem) => (
         <option key={elem.optionName} value={elem.optionValue}>
           {elem.optionName}
