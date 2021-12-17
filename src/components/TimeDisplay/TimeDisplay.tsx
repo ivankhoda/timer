@@ -1,6 +1,5 @@
 import React from "react";
 import { secondsToMinutes } from "../../utils";
-
 interface IProps {
   name: string;
   time: number;

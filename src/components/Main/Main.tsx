@@ -31,11 +31,7 @@ export const Main = () => {
       ? (store.dispatch(decrementRounds()), setRounds(store.getState().setRounds))
       : console.log("Reached limit");
   };
-  const checkLimits = (value: number, limit: number) => {
-    value !== limit ? console.log("limit not reached yet") : console.log("limit reached");
-  };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSetRounds = (e: React.FormEvent): void => {
     e.preventDefault();
     console.log(e);
@@ -66,7 +62,6 @@ export const Main = () => {
   //TODO add pause function
   const makePause = () => {
     setPause(true);
-    // setStart(false);
   };
   useEffect(() => {
     let counter = workingTime - 1;
