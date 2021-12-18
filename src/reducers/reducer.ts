@@ -13,7 +13,6 @@ export const reducer = combineReducers({
   setRestingTime: setRestingTime,
   setCurrentRound: setCurrentRound,
   setRemindTime: setReminderTime,
-
   setReminderTimeForEndOfRest: setReminderTimeForEndOfRest,
   setTimeForPrepare: setTimeForPrepare,
 });
