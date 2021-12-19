@@ -1,9 +1,3 @@
-// Using
-//.div {
-//   @include _1170 {
-//       @content;
-//   }
-//}
 @mixin _1170 {
   @media screen and (max-width: 1170px) {
     @content;

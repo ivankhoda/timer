@@ -112,7 +112,6 @@ export const Main = () => {
   //TODO add restart current round progress
 
   const reset = () => {
-    console.log("reser btn");
     store.dispatch(resetTimer());
     store.dispatch(resetRounds());
     setCurrentRound(store.getState().setCurrentRound);
