@@ -9,7 +9,6 @@ import {
   incrementRounds,
   resetRounds,
   resetTimer,
-  set_rounds,
 } from "../../utils";
 import { ControlButton } from "../ControlButton/ControlButton";
 import { Rounds } from "../Rounds/Rounds";
@@ -32,16 +31,6 @@ export const Main = () => {
       : console.log("Reached limit");
   };
 
-  const onSetRounds = (e: React.FormEvent): void => {
-    e.preventDefault();
-    console.log(e);
-    const inputValue = (document.getElementById("inputRounds") as HTMLInputElement).value;
-    const payload = parseInt(inputValue);
-
-    store.getState().setRounds !== 1 || store.getState().setRounds !== 99
-      ? (store.dispatch(set_rounds(payload)), setRounds(store.getState().setRounds))
-      : console.log("something wrong");
-  };
   store.subscribe(incrementRounds);
   store.subscribe(decrementRounds);
 
@@ -114,6 +103,7 @@ export const Main = () => {
   const reset = () => {
     store.dispatch(resetTimer());
     store.dispatch(resetRounds());
+    setRounds(store.getState().setRounds);
     setCurrentRound(store.getState().setCurrentRound);
     setWorkingTime(store.getState().setWorkingTime);
     setRestTime(store.getState().setRestingTime);
