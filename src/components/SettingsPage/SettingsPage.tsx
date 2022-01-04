@@ -153,8 +153,6 @@ export const SettingsPage = () => {
         onChange={onTimeRemindRestEndChange}
         value={remindForRestEnd}
       />
-      {/* <SettingsElement title="Не затемнять экран" type="checkbox" name={"doNotTurnOfScreen"} onChange={onNoSleep} />
-      <SettingsElement title="Голосовое оповещение" type="checkbox" name={"useVoiceToRemind"} onChange={onChange} /> */}
     </div>
   );
 };
